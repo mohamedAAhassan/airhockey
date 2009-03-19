@@ -9,11 +9,14 @@ using namespace std;
 class Neuron
 {
 private:
+
+
+public:
 	Neuron(); 
+
 	vector<double> x; // vektor vhodov
 	vector<double> w; // vektor utezi
 
-public:
 	double Y(); // izhod
 };
 
