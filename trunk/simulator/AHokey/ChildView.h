@@ -65,8 +65,8 @@ public:
 	double vcLength(double cX, double cY);
 	void generateNewPuckDirection(void);
 	void pl2premikmalet(void);
-	bool odbojstene(void);
-	bool odbojmaleta(void);
+	void odbojstene(void);
+	void odbojmaleta(void);
 	void EstimateNewPuckPossition(void);
 	bool validPuckPos(void);
 	void calcTime(void);
