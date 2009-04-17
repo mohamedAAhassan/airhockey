@@ -8,7 +8,7 @@ CNNParser::CNNParser(string filename) : filename(filename) { }
 int CNNParser::splitIntoTokens(int start, string input, string &output) // returns position, saves token into output
 {
     output = "";
-    for(int i=start; i<input.size(); i++)
+    for(unsigned i=start; i<input.size(); i++)
     {
         if(input[i] != ' ' && input[i] != '\n' && input[i] != '\t' && input[i] != '\0' && input[i] != '\r') /// !!!
             output += input[i];
@@ -21,7 +21,7 @@ int CNNParser::splitIntoTokens(int start, string input, string &output) // retur
   //return input.size();
 }
 
-int i=0;
+unsigned i=0;
 
 //template<typename T>
 bool CNNParser::parse()
@@ -39,7 +39,7 @@ bool CNNParser::parse()
 
         getline(file, buff);
 
-        int j = 0; // counter for columns
+        unsigned j = 0; // counter for columns
         // split line into tokens
         string token;
         int spos = this->splitIntoTokens(0, buff, token);
@@ -53,7 +53,7 @@ bool CNNParser::parse()
             this->patterns.addColumns(1);
         this->patterns.insert(atof(token.c_str()), i, j);
 
-        while(buff.size() != spos)
+        while(buff.size() != (unsigned)spos)
         {
             j ++;
 

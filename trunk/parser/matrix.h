@@ -53,9 +53,14 @@ public:
                 return false;
     }
 
-    vector<T>* returnVector(int i)
+    vector<T>* returnVectorPtr(int i)
     {
         return &matrix[i];
+    }
+
+    vector<T> returnVector(int i)
+    {
+        return matrix[i];
     }
 
     unsigned getM() const
