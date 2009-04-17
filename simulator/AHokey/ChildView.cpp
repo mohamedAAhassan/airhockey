@@ -316,7 +316,7 @@ bool CChildView::validPuckPos(void)
 	return true;
 }
 //**************************************************************************************************************//
-bool CChildView::odbojstene(void)
+void CChildView::odbojstene(void)
 {
 
 	 if(puck.posX < 40 )
@@ -339,27 +339,28 @@ bool CChildView::odbojstene(void)
 			puck.posY=417;
 			puck.dirY = - puck.dirY;
 	}
-
-return true;
 }
-bool CChildView::odbojmaleta(void)
+void CChildView::odbojmaleta(void)
 {
-	int x,y;
-	x=puck.posX-pl1Malet.posX;
-	y=puck.posY-pl1Malet.posY;
-
-	if(vcLength((puck.posX-pl1Malet.posX),(puck.posY-pl1Malet.posY))<=(puck.radius+pl1Malet.radius))
-	{
-		puck.dirX =  - puck.dirX;
-		puck.dirY =  puck.dirY;
+	int x1,y1,x2,y2;
+	x1=puck.posX-pl1Malet.posX;
+	y1=puck.posY-pl1Malet.posY;
+	x2=puck.posX-pl2Malet.posX;
+	y2=puck.posY-pl2Malet.posY;	
+	if(vcLength(x1,y1)<(puck.radius+pl1Malet.radius))
+	{ 
+		puck.posX = pl1Malet.posX+x1;
+		puck.posY = pl1Malet.posY+y1;
+		puck.dirX =  x1/vcLength(x1,y1);
+		puck.dirY =  y1/vcLength(x1,y1);
 	}
-	else if(vcLength((puck.posX-pl2Malet.posX),(puck.posY-pl2Malet.posY))<=(puck.radius+pl2Malet.radius))
+	else if(vcLength(x2,y2)<(puck.radius+pl2Malet.radius))
 	{
-		puck.dirX =  - puck.dirX;
-		puck.dirY =  puck.dirY;
+		puck.posX = pl2Malet.posX+x2;
+		puck.posY = pl2Malet.posY+y2;
+		puck.dirX =  x2/vcLength(x2,y2);
+		puck.dirY =  y2/vcLength(x2,y2);
 	}
-
-	return true;
 }
 
 
