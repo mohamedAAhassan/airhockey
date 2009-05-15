@@ -84,16 +84,16 @@ void CChildView::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 ///////////////////////////////////////////////////////////////////////////////
 {
 	CWnd::OnKeyUp(nChar, nRepCnt, nFlags);
-	SetTimer(1, 50, 0);	   // 1, 50, 0
+	SetTimer(1, 10, 0);	   // 1, 50, 0
 	runGame = true;        // Igra se je zaèela
 
-	playTime.min = 1;
-	playTime.sec = 0;
+	//playTime.min = 1;
+	//playTime.sec = 0;
 	pl1Score = 0;
 	pl2Score = 0;
 	old_mal1_x = -2;
 	old_mal1_y = -2;
-	startTick = GetTickCount();
+	//startTick = GetTickCount();
 	SetCursorPos(pl1Malet.posX,pl1Malet.posY+50); // miško postavimo v sredino igralne mize
 	//ShowCursor(FALSE);     // skrijemo kurzor miške
 }
@@ -209,11 +209,11 @@ void CChildView::PaintScreen(CMemDC *dc)
 	  dc->Ellipse(pl1Malet.posX-17,pl1Malet.posY-17,pl1Malet.posX+17,pl1Malet.posY+17);
 	  dc->Ellipse(pl1Malet.posX-10,pl1Malet.posY-10,pl1Malet.posX+10,pl1Malet.posY+10);
 
-	  dc->SelectObject(pl2Malet.mPen);
+	  /*dc->SelectObject(pl2Malet.mPen);
 	  dc->SelectObject(&pl2Malet.mBrush);
 	  dc->Ellipse(pl2Malet.posX-20,pl2Malet.posY-20,pl2Malet.posX+20,pl2Malet.posY+20);
 	  dc->Ellipse(pl2Malet.posX-17,pl2Malet.posY-17,pl2Malet.posX+17,pl2Malet.posY+17);
-	  dc->Ellipse(pl2Malet.posX-10,pl2Malet.posY-10,pl2Malet.posX+10,pl2Malet.posY+10);
+	  dc->Ellipse(pl2Malet.posX-10,pl2Malet.posY-10,pl2Malet.posX+10,pl2Malet.posY+10);*/
 	
 
 	}
@@ -225,11 +225,11 @@ void CChildView::PaintScreen(CMemDC *dc)
 
     CFont* old_font = dc->SelectObject(&timeFont); 
 	dc->SetTextColor(RGB(18,87,11));
-	if(playTime.sec/10 < 1)
+	/*if(playTime.sec/10 < 1)
 	 str.Format(_T("0%d:0%d"),playTime.min, playTime.sec);
 	else
 	 str.Format(_T("0%d:%d"),playTime.min, playTime.sec);
-
+*/
 	dc->TextOut(393, 3, str);    
     dc->SelectObject(old_font);
 
@@ -274,21 +274,27 @@ void CChildView::generateNewPuckDirection(void)
 // Generiraj novi nakljuèni smerni vektor paka. V igri ta funkcija odpade.
 ///////////////////////////////////////////////////////////////////////////////
 {
-	int posX;
+	int posX=rand()%100;
 	if (rand()%2 == 0) posX = puck.posX + 100;
-	//else posX = puck.posX - rand()%100;
-	else posX = puck.posX - 100;
-	int posY;
-    if (rand()%2 == 0) posY = puck.posY + 100;
-	//else posY = puck.posY - rand()%100;
-	else posY = puck.posY - 100;
+	else posX = puck.posX - rand()%100;
 
+	int posY=rand()%400;
+    if (rand()%2 == 0) posY = puck.posY;
+	else posY = puck.posY - rand()%100;
+
+	puck.posX = 550+rand()%100;
+	puck.posY = rand()%400;
 	puck.dirX = (double)posX - puck.posX;
+
 	puck.dirY = (double)posY - puck.posY;
 	double d = vcLength(puck.dirX, puck.dirY);
 	puck.dirX /= d;
 	puck.dirY /= d;
-	puck.velocity = rand()%3+17;
+	puck.velocity = 7;
+	if(rand()%2==1)
+		puck.dirY=-puck.dirY;
+	if(puck.dirX>0)
+		puck.dirX=-puck.dirX;
 	puck.par = 5;
 }
 //-----------------------------------------------------------------------------
@@ -354,27 +360,27 @@ void CChildView::odbojmaleta(void)
 		puck.dirX =  x1/vcLength(x1,y1);
 		puck.dirY =  y1/vcLength(x1,y1);
 	}
-	else if(vcLength(x2,y2)<(puck.radius+pl2Malet.radius))
+	/*else if(vcLength(x2,y2)<(puck.radius+pl2Malet.radius))
 	{
 		puck.posX = pl2Malet.posX+x2;
 		puck.posY = pl2Malet.posY+y2;
 		puck.dirX =  x2/vcLength(x2,y2);
 		puck.dirY =  y2/vcLength(x2,y2);
-	}
+	}*/
 }
 
 
 	//*********premik modrega maleta je nakljucen********************************************************************
 void CChildView::pl2premikmalet(void)
 {
-	int k=rand();
+	/*int k=rand();
 	if(k%5==1)
 	{
 		if(puck.posY>pl2Malet.posY)
 			pl2Malet.posY+=3;
 		else
 			pl2Malet.posY-=3;
-	}
+	}*/
 }
 
 //-----------------------------------------------------------------------------
@@ -392,10 +398,11 @@ void CChildView::EstimateNewPuckPossition(void)
 	 if(!validPuckPos())
 	 {
 		odbojstene();
+		//generateNewPuckDirection();
 	 }
 	 else
 	 {
-		pl2premikmalet();
+		//pl2premikmalet();
 		odbojmaleta();
 	}
 
@@ -498,7 +505,7 @@ void CChildView::calcTime(void)
 // Izraèunamo koliko èasa je minilo od zadnjega klica timerja
 ///////////////////////////////////////////////////////////////////////////////
 {
-	int tick = GetTickCount();
+	/*int tick = GetTickCount();
 
 	if((tick-startTick) >= 1000){
 	  if(playTime.sec == 0){
@@ -517,7 +524,7 @@ void CChildView::calcTime(void)
 	  else playTime.sec--;
 
 	  startTick = tick;
-	}
+	}*/
 }
 //-----------------------------------------------------------------------------
 void CChildView::OnTimer(UINT_PTR nIDEvent)
@@ -530,22 +537,26 @@ void CChildView::OnTimer(UINT_PTR nIDEvent)
 	/////////////////////////// deaktivirajmo timer ///////////////////////////
 	//KillTimer(1);             // Odkomentirati v primeru poèasnih funkcij
 	///////////////////////////////////////////////////////////////////////////
-	CWnd::OnTimer(nIDEvent);
+	//CWnd::OnTimer(nIDEvent);
 	EstimateNewPuckPossition();  // doloèitev položaja paka
 
     DetermineGoal();
 //************************************belezenje podatkov*****************************************************************************//
-	if(nekaj>5)//hitrost belezenja podatkov
+	if(nekaj%6>1)//hitrost belezenja podatkov
 	  {
 
-		nekaj=0;
 		ofstream out("test.txt",ios_base::app); 
-		out << puck.posX <<" "<<puck.posY<<" "<<puck.dirX<<" "<<puck.dirY<<" "<<pl1Malet.posX<<" "<<pl1Malet.posY<<endl;
+		out << puck.posX/825.0 <<" "<<puck.posY/415.0<<" "<<puck.dirX/825.0<<" "<<puck.dirY/415.0<<" "<<pl1Malet.posX/825.0<<" "<<pl1Malet.posY/415.0<<endl;
 		out.close();
 	  }
+
+	if(nekaj>200)
+	{
+		nekaj=0;
+		generateNewPuckDirection();
+	}
 	else
 		nekaj++;
-
     //if((pl1Score>6) || (pl2Score>6))
 	//  KillTimer(1);
 
