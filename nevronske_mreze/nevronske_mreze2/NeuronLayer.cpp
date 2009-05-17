@@ -23,3 +23,8 @@ Neuron* NeuronLayer::neuronAt(int index) {
 vector<Neuron*> NeuronLayer::neurons() {
 	return m_neurons;
 }
+
+int NeuronLayer::numNeurons() const
+{
+	return this->m_numberOfNeurons;
+}

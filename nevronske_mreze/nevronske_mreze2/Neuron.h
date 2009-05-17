@@ -15,6 +15,8 @@ public:
 	double activationValue();
 	void setActivationValue(double);
 
+	int numberOfInputs() const;
+
 private:
     int m_numberOfInputs;
 	double m_activationValue;
