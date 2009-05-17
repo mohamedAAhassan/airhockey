@@ -79,6 +79,9 @@ void testPrimer1() {
 	LearnNeuralNetwork networkLearn(&network);
 	networkLearn.learn(x, d, 0.5, 0.001);
 
+	// v dat.
+	network.saveNeuralNetwork("test.txt");
+
 	cout << "test: " <<endl;
 	testNeuralNetwork(&network, 2, 0.0, 0.0);
 	testNeuralNetwork(&network, 2, 1.0, 0.0);

@@ -48,3 +48,7 @@ double Neuron::activationFunction(double input) {
 	//return input;
 	return (1.0 / (1.0 + exp((-input)/1)));
 }
+
+int Neuron::numberOfInputs() const {
+	return this->m_numberOfInputs;
+}

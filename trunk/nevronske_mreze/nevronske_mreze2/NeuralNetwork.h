@@ -2,6 +2,7 @@
 #define NEURON_NETWORK_H_
 
 #include <vector>
+#include <fstream>
 #include "NeuronLayer.h"
 using namespace std;
 
@@ -11,6 +12,8 @@ public:
     vector<double> calculate(vector<double>);
 	vector<NeuronLayer*> layers();
 	NeuronLayer* layerAt(int);
+
+	bool saveNeuralNetwork(char*);
 
 private:
     int m_inputs;
