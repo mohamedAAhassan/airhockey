@@ -36,6 +36,10 @@ void Neuron::setWeight(int weightIndex, double newValue) {
 	m_wights[weightIndex] = newValue;	
 }
 
+void Neuron::addWeight(double newValue) {
+	m_wights.push_back(newValue);	
+}
+
 double Neuron::activationValue() {
 	return m_activationValue;
 }
@@ -51,4 +55,9 @@ double Neuron::activationFunction(double input) {
 
 int Neuron::numberOfInputs() const {
 	return this->m_numberOfInputs;
+}
+
+void Neuron::setNumberOfInputs(int num)
+{
+	this->m_numberOfInputs = num;
 }

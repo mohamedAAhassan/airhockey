@@ -52,7 +52,10 @@ void testNeuralNetwork(NeuralNetwork* network,  int n, ...) {
 }
 
 void testPrimer1() {
-	NeuralNetwork network(2, 1, 2, 1);
+	//NeuralNetwork::NeuralNetwork(int inputs, int layers, int neuronsPerLayer, int outputs)
+	NeuralNetwork fnetwork;
+	fnetwork.load("test.txt");
+/*	NeuralNetwork network(2, 1, 2, 1);
 
 	setWeight(&network, 0, 0, 0, 0.3);
 	setWeight(&network, 0, 0, 1, 0.5);
@@ -64,10 +67,10 @@ void testPrimer1() {
 	setActivationValue(&network, 0, 0, -0.5);
 	setActivationValue(&network, 0, 1, 0.5);
 	setActivationValue(&network, 1, 0, -0.2);
-
+	*/
 	vector< vector<double> > x;
 	vector< vector<double> > d;
-	
+/*	
 	addValues(x, 2, 0.0, 0.0);
 	addValues(d, 1, 0.0);
 	addValues(x, 2, 1.0, 0.0);
@@ -76,17 +79,18 @@ void testPrimer1() {
 	addValues(d, 1, 1.0);
 	addValues(x, 2, 1.0, 1.0);
 	addValues(d, 1, 0.0);
-	LearnNeuralNetwork networkLearn(&network);
+*/
+	LearnNeuralNetwork networkLearn(&fnetwork);
 	networkLearn.learn(x, d, 0.5, 0.001);
 
 	// v dat.
-	network.saveNeuralNetwork("test.txt");
+	//network.save("test.txt");
 
 	cout << "test: " <<endl;
-	testNeuralNetwork(&network, 2, 0.0, 0.0);
-	testNeuralNetwork(&network, 2, 1.0, 0.0);
-	testNeuralNetwork(&network, 2, 0.0, 1.0);
-	testNeuralNetwork(&network, 2, 1.0, 1.0);
+	/*testNeuralNetwork(&fnetwork, 2, 0.0, 0.0);
+	testNeuralNetwork(&fnetwork, 2, 1.0, 0.0);
+	testNeuralNetwork(&fnetwork, 2, 0.0, 1.0);
+	testNeuralNetwork(&fnetwork, 2, 1.0, 1.0);*/
 }
 
 void testPrimer2() {

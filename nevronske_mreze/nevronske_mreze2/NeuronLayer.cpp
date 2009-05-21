@@ -24,7 +24,12 @@ vector<Neuron*> NeuronLayer::neurons() {
 	return m_neurons;
 }
 
-int NeuronLayer::numNeurons() const
+/*int NeuronLayer::numNeurons() const
 {
 	return this->m_numberOfNeurons;
 }
+
+void NeuronLayer::setNumNeurons(int num)
+{
+	this->m_numberOfNeurons = num;
+}*/
