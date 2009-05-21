@@ -12,9 +12,11 @@ public:
 	vector<double> weights();
 	double weightAt(int);
 	void setWeight(int, double);
+	void addWeight(double newValue);
 	double activationValue();
 	void setActivationValue(double);
 
+	void setNumberOfInputs(int num);
 	int numberOfInputs() const;
 
 private:

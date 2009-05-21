@@ -9,11 +9,13 @@ using namespace std;
 class NeuralNetwork {
 public:
     NeuralNetwork(int, int, int, int);
+	NeuralNetwork();
     vector<double> calculate(vector<double>);
 	vector<NeuronLayer*> layers();
 	NeuronLayer* layerAt(int);
 
-	bool saveNeuralNetwork(char*);
+	bool save(char*);
+	bool load(char*);
 
 private:
     int m_inputs;

@@ -12,7 +12,8 @@ public:
 		vector<Neuron*> neurons();
 		Neuron* neuronAt(int);
 
-		int numNeurons() const;
+		//int numNeurons() const;
+		//void setNumNeurons(int num);
 
 private:
         int m_inputsPerNeuron; // st. vhodov
