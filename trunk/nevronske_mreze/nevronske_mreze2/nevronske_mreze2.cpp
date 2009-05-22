@@ -9,6 +9,7 @@ using namespace std;
 
 #include "NeuralNetwork.h"
 #include "LearnNeuralNetwork.h"
+#include "NNPArser.h"
 
 void setWeight(NeuralNetwork* network, int layer, int neuron, int weight, double value) {
 	network->layerAt(layer)->neuronAt(neuron)->setWeight(weight, value);
@@ -51,46 +52,47 @@ void testNeuralNetwork(NeuralNetwork* network,  int n, ...) {
 	cout <<endl;
 }
 
+void print_input_values2(vector< vector<double> > x, vector< vector<double> > p) {
+	for(int i=0; i<x.size(); i++) {
+		for(int j=0; j<x[i].size(); j++) {
+			std::cout << "x" << (j+1) << " = " << x[i][j] << ", ";
+		}
+		for(int j=0; j<p[i].size(); j++) {
+			std::cout << "p" << (j+1) << " = " << p[i][j] << ", ";
+		}
+		std::cout << std::endl;
+	}
+}
+
 void testPrimer1() {
-	//NeuralNetwork::NeuralNetwork(int inputs, int layers, int neuronsPerLayer, int outputs)
-	NeuralNetwork fnetwork;
-	fnetwork.load("test.txt");
-/*	NeuralNetwork network(2, 1, 2, 1);
-
-	setWeight(&network, 0, 0, 0, 0.3);
-	setWeight(&network, 0, 0, 1, 0.5);
-	setWeight(&network, 0, 1, 0, 0.4);
-	setWeight(&network, 0, 1, 1, -0.3);
-	setWeight(&network, 1, 0, 0, 0.1);
-	setWeight(&network, 1, 0, 1, -0.4);
-
-	setActivationValue(&network, 0, 0, -0.5);
-	setActivationValue(&network, 0, 1, 0.5);
-	setActivationValue(&network, 1, 0, -0.2);
-	*/
+	NeuralNetwork network(6, 1, 10, 2);
+	
 	vector< vector<double> > x;
 	vector< vector<double> > d;
-/*	
-	addValues(x, 2, 0.0, 0.0);
-	addValues(d, 1, 0.0);
-	addValues(x, 2, 1.0, 0.0);
-	addValues(d, 1, 1.0);
-	addValues(x, 2, 0.0, 1.0);
-	addValues(d, 1, 1.0);
-	addValues(x, 2, 1.0, 1.0);
-	addValues(d, 1, 0.0);
-*/
-	LearnNeuralNetwork networkLearn(&fnetwork);
-	networkLearn.learn(x, d, 0.5, 0.001);
 
-	// v dat.
-	//network.save("test.txt");
+	CNNParser parser("test.txt");
+	parser.parse();
 
-	cout << "test: " <<endl;
-	/*testNeuralNetwork(&fnetwork, 2, 0.0, 0.0);
-	testNeuralNetwork(&fnetwork, 2, 1.0, 0.0);
-	testNeuralNetwork(&fnetwork, 2, 0.0, 1.0);
-	testNeuralNetwork(&fnetwork, 2, 1.0, 1.0);*/
+	for(int i=0; i<parser.getPatterns().getM(); i++) {
+		vector<double> temp;
+		int size = parser.getPatterns().returnVector(i).size()-1;
+		temp.push_back(parser.getPatterns().returnVector(i)[size-1]);
+		temp.push_back(parser.getPatterns().returnVector(i)[size]);
+		d.push_back(temp);
+		
+		vector<double> temp2 = parser.getPatterns().returnVector(i);
+		temp2.pop_back();
+		temp2.pop_back();
+
+		x.push_back(temp2);
+	}
+
+	//print_input_values2(x, d);
+
+	LearnNeuralNetwork networkLearn(&network);
+	networkLearn.learn(x, d, 0.5, 0.0008);
+
+	network.save("test2.txt");
 }
 
 void testPrimer2() {

@@ -15,6 +15,7 @@
 typedef struct stMALET{
 	int posX,posY;        // Položaj valja na igralni mizi
 	int radius;			  // Radij igralèevega valja
+	double dirX,dirY;
 	CPen *mPen;
 	CBrush mBrush;
 }MALET;

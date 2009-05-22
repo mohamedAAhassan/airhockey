@@ -42,7 +42,7 @@ void LearnNeuralNetwork::learn(vector< vector<double> > x, vector< vector<double
 	double localError = 0.0;
 	double globalError = 0.0;
 
-	print_input_values(x, p);
+	//print_input_values(x, p);
 	print_weights(m_neuralNetwork);
 	cin.get();
 	do {

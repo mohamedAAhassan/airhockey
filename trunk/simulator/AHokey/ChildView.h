@@ -22,6 +22,8 @@ public:
 
 // Operations
 public:
+	int oldX;
+	int oldY;
 
 // Overrides
 	protected:
