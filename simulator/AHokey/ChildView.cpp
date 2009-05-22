@@ -21,6 +21,8 @@ CChildView::CChildView()
 , tableBlLine(NULL)
 , redLinePen(NULL)
 {
+	oldX = 0;
+	oldY = 0;
 }
 
 CChildView::~CChildView()
@@ -394,6 +396,7 @@ void CChildView::EstimateNewPuckPossition(void)
 	puck.par = puck.velocity;
 	 puck.posX += (int)puck.par*puck.dirX;
 	 puck.posY += (int)puck.par*puck.dirY;
+	 
 	 //*****************************************************preverjanje ce je pag znotraj ali zunaj izgralne povrsine*****************
 	 if(!validPuckPos())
 	 {
@@ -544,9 +547,15 @@ void CChildView::OnTimer(UINT_PTR nIDEvent)
 //************************************belezenje podatkov*****************************************************************************//
 	if(nekaj%6>1)//hitrost belezenja podatkov
 	  {
-
 		ofstream out("test.txt",ios_base::app); 
-		out << puck.posX/825.0 <<" "<<puck.posY/415.0<<" "<<puck.dirX/825.0<<" "<<puck.dirY/415.0<<" "<<pl1Malet.posX/825.0<<" "<<pl1Malet.posY/415.0<<endl;
+		double deltaX = puck.posX - oldX;
+		double deltaY = puck.posY - oldY;
+		if(oldX != 0 && oldY != 0) {
+			out << deltaX/825.0 << " " << deltaY/415.0 <<endl;
+		}
+		out << puck.posX/825.0 <<" "<<puck.posY/415.0<<" "<<puck.dirX/825.0<<" "<<puck.dirY/415.0<<" "<<pl1Malet.posX/825.0<<" "<<pl1Malet.posY/415.0 << " ";
+		oldX = puck.posX;
+		oldY = puck.posY;
 		out.close();
 	  }
 

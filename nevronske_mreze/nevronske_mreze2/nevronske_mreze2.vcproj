@@ -175,6 +175,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Matrix.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\NeuralNetwork.cpp"
 				>
 			</File>
@@ -188,6 +192,10 @@
 			</File>
 			<File
 				RelativePath=".\nevronske_mreze2.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\NNParser.cpp"
 				>
 			</File>
 			<File
@@ -221,6 +229,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Matrix.h"
+				>
+			</File>
+			<File
 				RelativePath=".\NeuralNetwork.h"
 				>
 			</File>
@@ -230,6 +242,10 @@
 			</File>
 			<File
 				RelativePath=".\NeuronLayer.h"
+				>
+			</File>
+			<File
+				RelativePath=".\NNParser.h"
 				>
 			</File>
 			<File
