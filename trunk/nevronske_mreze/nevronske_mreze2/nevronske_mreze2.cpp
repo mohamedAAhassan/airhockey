@@ -65,12 +65,12 @@ void print_input_values2(vector< vector<double> > x, vector< vector<double> > p)
 }
 
 void testPrimer1() {
-	NeuralNetwork network(6, 1, 10, 2);
+	NeuralNetwork network(6, 1, 5, 2);
 	
 	vector< vector<double> > x;
 	vector< vector<double> > d;
 
-	CNNParser parser("test.txt");
+	CNNParser parser("vzorci.txt");
 	parser.parse();
 
 	for(int i=0; i<parser.getPatterns().getM(); i++) {
@@ -90,7 +90,7 @@ void testPrimer1() {
 	//print_input_values2(x, d);
 
 	LearnNeuralNetwork networkLearn(&network);
-	networkLearn.learn(x, d, 0.5, 0.0008);
+	networkLearn.learn(x, d, 0.5, 0.001);
 
 	network.save("test2.txt");
 }
