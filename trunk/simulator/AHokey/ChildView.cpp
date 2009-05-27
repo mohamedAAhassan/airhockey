@@ -398,7 +398,7 @@ void CChildView::EstimateNewPuckPossition(void)
 	 puck.posY += (int)puck.par*puck.dirY;
 	 
 	 //*****************************************************preverjanje ce je pag znotraj ali zunaj izgralne povrsine*****************
-	 if(!validPuckPos())
+	 /*if(!validPuckPos())
 	 {
 		odbojstene();
 		//generateNewPuckDirection();
@@ -407,7 +407,7 @@ void CChildView::EstimateNewPuckPossition(void)
 	 {
 		//pl2premikmalet();
 		odbojmaleta();
-	}
+	}*/
 
 }
 //-----------------------------------------------------------------------------
@@ -547,7 +547,7 @@ void CChildView::OnTimer(UINT_PTR nIDEvent)
 //************************************belezenje podatkov*****************************************************************************//
 	if(nekaj%6>1)//hitrost belezenja podatkov
 	  {
-		ofstream out("test.txt",ios_base::app); 
+		ofstream out("vzorci.txt",ios_base::app); 
 		double deltaX = puck.posX - oldX;
 		double deltaY = puck.posY - oldY;
 		if(oldX != 0 && oldY != 0) {
