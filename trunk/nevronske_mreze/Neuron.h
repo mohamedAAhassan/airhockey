@@ -3,6 +3,7 @@
 
 #include "Neuron.h"
 #include <vector>
+#include <cstdlib>
 using namespace std;
 
 class Neuron {

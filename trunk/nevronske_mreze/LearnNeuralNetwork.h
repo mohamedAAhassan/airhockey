@@ -2,6 +2,7 @@
 #define LEARN_NEURAL_NETWORK_
 
 #include "NeuralNetwork.h"
+#include "Error.h"
 
 class LearnNeuralNetwork
 {
@@ -9,7 +10,7 @@ public:
 	LearnNeuralNetwork(NeuralNetwork*);
 	~LearnNeuralNetwork();
 
-	void learn(vector< vector<double> >, vector< vector<double> >, double, double);
+	void learn(vector< vector<double> >, vector< vector<double> >, double, Error*);
 
 private:
 	NeuralNetwork* m_neuralNetwork;

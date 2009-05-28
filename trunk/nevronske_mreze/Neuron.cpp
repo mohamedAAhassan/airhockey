@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "Neuron.h"
 #include <cmath>
 #include <iostream>
