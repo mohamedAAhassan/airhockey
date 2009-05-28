@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <fstream>
+#include <cstdlib>
 #include "NeuronLayer.h"
 using namespace std;
 

@@ -5,7 +5,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <string>
-#include "matrix.h"
+#include "Matrix.h"
 
 class CNNParser
 {

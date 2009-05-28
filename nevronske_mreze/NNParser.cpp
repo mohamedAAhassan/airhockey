@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "NNParser.h"
 
 using namespace std;

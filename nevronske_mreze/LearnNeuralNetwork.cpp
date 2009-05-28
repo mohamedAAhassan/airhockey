@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include <iostream>
 #include <cmath>
 #include "LearnNeuralNetwork.h"
@@ -37,16 +36,13 @@ LearnNeuralNetwork::LearnNeuralNetwork(NeuralNetwork* neuralNetwork) {
 
 LearnNeuralNetwork::~LearnNeuralNetwork() {}
 
-void LearnNeuralNetwork::learn(vector< vector<double> > x, vector< vector<double> > p, double learningSpeed, double maxError) {
+void LearnNeuralNetwork::learn(vector< vector<double> > x, vector< vector<double> > p, double learningSpeed, Error* error) {
 	m_learningSpeed = learningSpeed;
-	double localError = 0.0;
-	double globalError = 0.0;
 
 	//print_input_values(x, p);
 	print_weights(m_neuralNetwork);
 	cin.get();
 	do {
-		localError = 0.0;
 		for(int j=0; j<x.size(); j++) {
 			calculateLayerOutputs(x[j]);
 
@@ -55,7 +51,8 @@ void LearnNeuralNetwork::learn(vector< vector<double> > x, vector< vector<double
 
 			updateHiddenLayers(gradients);
 			
-			localError += calculateLocalError(m_layerOutputs[m_layerOutputs.size()-1], p[j]);
+			//localError += calculateLocalError(m_layerOutputs[m_layerOutputs.size()-1], p[j]);
+			error->addLocalError(m_layerOutputs[m_layerOutputs.size()-1], p[j]);
 			m_layerOutputs.clear();
 
 			updateWeights();
@@ -64,9 +61,8 @@ void LearnNeuralNetwork::learn(vector< vector<double> > x, vector< vector<double
 			print_weights(m_neuralNetwork);
 			cin.get();*/
 		}
-		globalError = localError / x.size();
-		cout << globalError <<endl;
-	} while (globalError >= maxError);
+		cout << error->getError() <<endl;
+	} while (!error->isErrorSmallEnough());
 }
 
 void LearnNeuralNetwork::calculateLayerOutputs(vector<double> &input) {

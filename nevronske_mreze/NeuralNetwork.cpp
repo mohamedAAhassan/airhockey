@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "NeuralNetwork.h"
 #include <iostream>
 
@@ -155,7 +154,8 @@ bool NeuralNetwork::save(char* filename)
 	file << this->m_outputs << endl; // st. izhodnih neuronov
 
 	// sharni utezi neuronov za vhodno plast
-	for ( int i=0; i< this->m_inputs; i++ )
+	//for ( int i=0; i< this->m_inputs; i++ )
+	for ( int i=0; i< this->layerAt(0)->neurons().size(); i++ )
 	{
 		// za vsak neuron shran aktivacijo in utezi
 		file << this->layerAt(0)->neuronAt(i)->activationValue() << endl; // altivacija

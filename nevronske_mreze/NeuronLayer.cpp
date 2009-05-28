@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "NeuronLayer.h"
 
 NeuronLayer::NeuronLayer(int inputsPerNeuron, int numberOfNeurons)
