@@ -10,12 +10,12 @@ using namespace std;
 class Error {
 	public:
 		Error(double, int);
-		~Error();
+		virtual ~Error();
 		
-		void addLocalError(std::vector<double>&, std::vector<double>&);
-		double getError();
+		virtual void addLocalError(std::vector<double>&, std::vector<double>&);
+		virtual double getError();
 		bool isErrorSmallEnough();
-	private:
+	protected:
 		int m_samples;
 		double m_max;
 		double m_localError;

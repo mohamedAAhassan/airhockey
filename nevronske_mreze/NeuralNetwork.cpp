@@ -72,7 +72,7 @@ bool NeuralNetwork::load(char *filename)
 
 	// utezi in prag za vhodno plast
 	// za vsak neuron:
-	for ( int i=0; i< this->m_inputs; i++ )
+	for ( int i=0; i< this->m_neuronsPerLayer; i++ )
 	{
 		// aktivacija
 		file >> current;
