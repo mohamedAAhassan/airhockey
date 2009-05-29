@@ -39,7 +39,7 @@ LearnNeuralNetwork::~LearnNeuralNetwork() {}
 void LearnNeuralNetwork::learn(vector< vector<double> > x, vector< vector<double> > p, double learningSpeed, Error* error) {
 	m_learningSpeed = learningSpeed;
 
-	//print_input_values(x, p);
+	print_input_values(x, p);
 	print_weights(m_neuralNetwork);
 	cin.get();
 	do {

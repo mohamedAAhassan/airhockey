@@ -49,7 +49,7 @@ void Neuron::setActivationValue(double value) {
 
 double Neuron::activationFunction(double input) {
 	//return input;
-	return (1.0 / (1.0 + exp((-input)/1)));
+	return (1.0 / (1.0 + exp((-input)/2)));
 }
 
 int Neuron::numberOfInputs() const {
