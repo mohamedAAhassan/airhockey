@@ -41,7 +41,7 @@ public:
 	MALET pl2Malet;   // igralna plošèica drugega igralca
 	PUCK puck;        // pak
 
-	NeuralNetwork network;
+	NeuralNetwork *network;
     vector<double> data;
 	vector<double> result;
 

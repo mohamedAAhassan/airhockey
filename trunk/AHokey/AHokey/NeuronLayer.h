@@ -9,11 +9,18 @@ class NeuronLayer {
 public:
         NeuronLayer(int, int);
         vector<double> calculate(vector<double>);
+		vector<Neuron*> neurons();
+		Neuron* neuronAt(int);
+
+		//int numNeurons() const;
+		//void setNumNeurons(int num);
 
 private:
-        int m_inputsPerNeuron;
-        int m_numberOfNeurons;
+        int m_inputsPerNeuron; // st. vhodov
+        int m_numberOfNeurons; // st. nevronov/plast
         vector<Neuron*> m_neurons;
+
+		
 };
 
 #endif
