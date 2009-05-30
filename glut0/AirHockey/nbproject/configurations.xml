@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="51">
+  <logicalFolder name="root" displayName="root" projectFiles="true">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+      <logicalFolder name="f1" displayName="polyscript" projectFiles="true">
+        <itemPath>src/polyscript/parser.h</itemPath>
+        <itemPath>src/polyscript/polygon.h</itemPath>
+        <itemPath>src/polyscript/scanner.h</itemPath>
+        <itemPath>src/polyscript/token.h</itemPath>
+      </logicalFolder>
+      <itemPath>src/graphics.h</itemPath>
+      <itemPath>src/Kij.h</itemPath>
+      <itemPath>src/Pak.h</itemPath>
+      <itemPath>src/Point2.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Resource Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <logicalFolder name="f1" displayName="polyscript" projectFiles="true">
+        <itemPath>src/polyscript/parser.cpp</itemPath>
+        <itemPath>src/polyscript/polygon.cpp</itemPath>
+        <itemPath>src/polyscript/scanner.cpp</itemPath>
+        <itemPath>src/polyscript/token.cpp</itemPath>
+      </logicalFolder>
+      <itemPath>src/graphics.cpp</itemPath>
+      <itemPath>src/Kij.cpp</itemPath>
+      <itemPath>src/main.cpp</itemPath>
+      <itemPath>src/Pak.cpp</itemPath>
+      <itemPath>src/Point2.cpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug_Linux" type="1">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <compilerSet>GNU|GNU</compilerSet>
+        <platform>2</platform>
+      </toolsSet>
+      <compileType>
+        <linkerTool>
+          <linkerLibItems>
+            <linkerOptionItem>-lglut</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+      <item path="src/Kij.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Kij.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Pak.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Pak.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Point2.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Point2.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/graphics.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/graphics.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/main.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/polyscript/parser.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/polyscript/parser.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/polyscript/polygon.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/polyscript/polygon.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/polyscript/scanner.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/polyscript/scanner.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/polyscript/token.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/polyscript/token.h">
+        <itemTool>3</itemTool>
+      </item>
+    </conf>
+    <conf name="Release_Linux" type="1">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <compilerSet>GNU|GNU</compilerSet>
+        <platform>2</platform>
+      </toolsSet>
+      <compileType>
+        <cCompilerTool>
+          <developmentMode>5</developmentMode>
+        </cCompilerTool>
+        <ccCompilerTool>
+          <developmentMode>5</developmentMode>
+        </ccCompilerTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <linkerTool>
+          <linkerLibItems>
+            <linkerOptionItem>-lglut</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+      <item path="src/Kij.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Kij.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Pak.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Pak.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Point2.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Point2.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/graphics.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/graphics.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/main.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/polyscript/parser.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/polyscript/parser.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/polyscript/polygon.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/polyscript/polygon.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/polyscript/scanner.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/polyscript/scanner.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/polyscript/token.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/polyscript/token.h">
+        <itemTool>3</itemTool>
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>
