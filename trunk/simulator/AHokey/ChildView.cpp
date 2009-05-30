@@ -124,8 +124,8 @@ void CChildView::OnMouseMove(UINT nFlags, CPoint point)
 	  }
 	    
 	 pl1Malet.posX +=DiffX;
-	 if(pl1Malet.posX < 50) pl1Malet.posX = 50;
-	 else if(pl1Malet.posX > 410) pl1Malet.posX = 410; 
+	 if(pl1Malet.posX < 455) pl1Malet.posX = 455;
+	 else if(pl1Malet.posX > 825) pl1Malet.posX = 820; 
 
 	 pl1Malet.posY += DiffY;
 	 if(pl1Malet.posY < 50) pl1Malet.posY = 50;
@@ -284,19 +284,15 @@ void CChildView::generateNewPuckDirection(void)
     if (rand()%2 == 0) posY = puck.posY;
 	else posY = puck.posY - rand()%100;
 
-	puck.posX = 550+rand()%100;
+	puck.posX = 100+rand()%100;
 	puck.posY = rand()%400;
-	puck.dirX = (double)posX - puck.posX;
+	puck.dirX = rand()%800-rand()%800;
 
-	puck.dirY = (double)posY - puck.posY;
+	puck.dirY = rand()%100-rand()%100;
 	double d = vcLength(puck.dirX, puck.dirY);
 	puck.dirX /= d;
 	puck.dirY /= d;
-	puck.velocity = 3;
-	if(rand()%2==1)
-		puck.dirY=-puck.dirY;
-	if(puck.dirX>0)
-		puck.dirX=-puck.dirX;
+	puck.velocity = 3+rand()%7;
 	puck.par = 5;
 }
 //-----------------------------------------------------------------------------
@@ -435,7 +431,7 @@ void CChildView::OnShowWindow(BOOL bShow, UINT nStatus)
 	tableBrush.CreateSolidBrush(RGB(242,240,240));
 
 	// Nastavitev zacetnega polozaja prvega igralca
-	pl1Malet.posX = 331;
+	pl1Malet.posX = 600;
 	pl1Malet.posY = 230;
 	pl1Malet.radius = MALET_RADIUS;
 	pl1Malet.mPen = new CPen(PS_SOLID, 1, RGB(141,39,7));
@@ -569,7 +565,7 @@ void CChildView::OnTimer(UINT_PTR nIDEvent)
 		out.close();
 	  }
 
-	if(nekaj>200)
+	if(nekaj>300)//èas potrebn za resetiranje paka
 	{
 		nekaj=0;
 		generateNewPuckDirection();
