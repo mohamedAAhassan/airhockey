@@ -292,7 +292,7 @@ void CChildView::generateNewPuckDirection(void)
 	double d = vcLength(puck.dirX, puck.dirY);
 	puck.dirX /= d;
 	puck.dirY /= d;
-	puck.velocity = 7;
+	puck.velocity = 3;
 	if(rand()%2==1)
 		puck.dirY=-puck.dirY;
 	if(puck.dirX>0)
@@ -348,6 +348,8 @@ void CChildView::odbojstene(void)
 			puck.dirY = - puck.dirY;
 	}
 }
+int prev_pos_x,prev_pos_y;
+
 void CChildView::odbojmaleta(void)
 {
 	int x1,y1,x2,y2;
@@ -361,7 +363,15 @@ void CChildView::odbojmaleta(void)
 		puck.posY = pl1Malet.posY+y1;
 		puck.dirX =  x1/vcLength(x1,y1);
 		puck.dirY =  y1/vcLength(x1,y1);
+
 	}
+	else
+	{
+		prev_pos_x=pl1Malet.posX;
+		prev_pos_y=pl1Malet.posY;
+	}
+	pl1Malet.posX=prev_pos_x;
+	pl1Malet.posY=prev_pos_y;
 	/*else if(vcLength(x2,y2)<(puck.radius+pl2Malet.radius))
 	{
 		puck.posX = pl2Malet.posX+x2;
@@ -398,7 +408,7 @@ void CChildView::EstimateNewPuckPossition(void)
 	 puck.posY += (int)puck.par*puck.dirY;
 	 
 	 //*****************************************************preverjanje ce je pag znotraj ali zunaj izgralne povrsine*****************
-	 /*if(!validPuckPos())
+	 if(!validPuckPos())
 	 {
 		odbojstene();
 		//generateNewPuckDirection();
@@ -407,7 +417,7 @@ void CChildView::EstimateNewPuckPossition(void)
 	 {
 		//pl2premikmalet();
 		odbojmaleta();
-	}*/
+	}
 
 }
 //-----------------------------------------------------------------------------
@@ -547,7 +557,7 @@ void CChildView::OnTimer(UINT_PTR nIDEvent)
 //************************************belezenje podatkov*****************************************************************************//
 	if(nekaj%6>1)//hitrost belezenja podatkov
 	  {
-		ofstream out("vzorci.txt",ios_base::app); 
+		ofstream out("test.txt",ios_base::app); 
 		double deltaX = puck.posX - oldX;
 		double deltaY = puck.posY - oldY;
 		if(oldX != 0 && oldY != 0) {
@@ -566,6 +576,8 @@ void CChildView::OnTimer(UINT_PTR nIDEvent)
 	}
 	else
 		nekaj++;
+	
+
     //if((pl1Score>6) || (pl2Score>6))
 	//  KillTimer(1);
 
