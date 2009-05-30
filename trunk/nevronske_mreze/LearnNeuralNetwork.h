@@ -24,6 +24,7 @@ private:
 	void updateHiddenLayers(vector<double>&);
 	double calculateLocalError(vector<double>&, vector<double>&);
 	void updateWeights();
+	double devirative(double);
 };
 
 #endif
