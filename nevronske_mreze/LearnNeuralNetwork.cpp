@@ -80,7 +80,7 @@ void LearnNeuralNetwork::calculateLayerOutputs(vector<double> &input) {
 void LearnNeuralNetwork::updateOutputLayer(vector<double> &gradients, vector<double> &p) {
 	for(int i=0; i<m_layerOutputs[m_layers.size()].size(); i++) {
 		Neuron* current = m_layers[m_layers.size()-1]->neuronAt(i);
-		double gradient = m_layerOutputs[m_layers.size()][i] * (1 - m_layerOutputs[m_layers.size()][i]) * (p[i] - m_layerOutputs[m_layers.size()][i]);
+		double gradient = devirative(m_layerOutputs[m_layers.size()][i]) * (p[i] - m_layerOutputs[m_layers.size()][i]);
 		for(int k=0; k<current->weights().size(); k++) {
 			//std::cout << "w" << (i+1) << "." << (k+1) << "(" << m_layers.size() << ") = " << m_layers[m_layers.size()-1]->neuronAt(i)->weightAt(k) << " + " << learningSpeed << " * " << gradient << " * " << m_layerOutputs[m_layers.size() - 1][k] << std::endl;
 			//m_layers[m_layers.size()-1]->neuronAt(i)->setWeight(k, m_layers[m_layers.size()-1]->neuronAt(i)->weightAt(k) + learningSpeed*gradient*m_layerOutputs[m_layers.size() - 1][k]);
@@ -106,7 +106,7 @@ void LearnNeuralNetwork::updateHiddenLayers(vector<double>& gradients) {
 			}
 			//std::cout << endl;
 			//std::cout << "G" << (k+1) << "(" << i+1 << ") = " << m_layerOutputs[i+1][k] << " * (1 - " << m_layerOutputs[i+1][k] << ") * " << temp << std::endl;
-			double gradient = m_layerOutputs[i+1][k] * (1 - m_layerOutputs[i+1][k]) * temp;
+			double gradient = devirative(m_layerOutputs[i+1][k]) * temp;
 			noviGradienti.push_back(gradient);
 			for(int l=0; l<weights.size(); l++) {
 				//std::cout << "w" << (k+1) << "." << (l+1) << "(" << i+1 << ") = " << weights[l] << " + " << learningSpeed << " * " << gradient << " * " << m_layerOutputs[i][l] << std::endl;
@@ -118,6 +118,11 @@ void LearnNeuralNetwork::updateHiddenLayers(vector<double>& gradients) {
 		}
 		gradients = noviGradienti;
 	}
+}
+
+double LearnNeuralNetwork::devirative(double value) {
+	//return value * (1 - value);
+	return 1 - pow(value, 2);
 }
 
 double LearnNeuralNetwork::calculateLocalError(std::vector<double> &outputs, std::vector<double> &expeced) {

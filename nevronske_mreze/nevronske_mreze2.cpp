@@ -83,12 +83,12 @@ void testPrimer1() {
 }
 
 int main(int argc, char** argv) {
-	NeuralNetwork network(6, 1, 30, 2);
+	NeuralNetwork network(6, 1, 10, 2);
 	
 	vector< vector<double> > x;
 	vector< vector<double> > d;
 
-	CNNParser parser("vzorci.txt");
+	CNNParser parser("vzorci_500.txt");
 	parser.parse();
 
 	int num = 0;
@@ -118,8 +118,8 @@ int main(int argc, char** argv) {
 	cout << "Stevilo vzorcev: " << num << endl;
 
 	LearnNeuralNetwork networkLearn(&network);
-	//networkLearn.learn(x, d, 0.5, new Error(0.00145, x.size()));
-	networkLearn.learn(x, d, 0.5, new DeltaError(0.0007, x.size()));
+	networkLearn.learn(x, d, 0.5, new Error(0.0017, x.size()));
+	//networkLearn.learn(x, d, 0.5, new DeltaError(0.001, x.size()));
 	//networkLearn.learn(x, d, 0.5, new Error(0.1, x.size()));
 
 	char filename[50];
