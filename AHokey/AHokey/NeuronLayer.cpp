@@ -15,3 +15,21 @@ vector<double> NeuronLayer::calculate(vector<double> inputs) {
     }
     return result;
 }
+
+Neuron* NeuronLayer::neuronAt(int index) {
+	return m_neurons[index];
+}
+
+vector<Neuron*> NeuronLayer::neurons() {
+	return m_neurons;
+}
+
+/*int NeuronLayer::numNeurons() const
+{
+	return this->m_numberOfNeurons;
+}
+
+void NeuronLayer::setNumNeurons(int num)
+{
+	this->m_numberOfNeurons = num;
+}*/

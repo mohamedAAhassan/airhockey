@@ -13,7 +13,7 @@
 #define GOAL_LOWER_Y 284
 
 typedef struct stMALET{
-	int posX,posY;        // Položaj valja na igralni mizi
+	double posX,posY;        // Položaj valja na igralni mizi
 	int lastposX, lastposY;
 	int radius;			  // Radij igralèevega valja
 	CPen *mPen;
@@ -21,7 +21,7 @@ typedef struct stMALET{
 }MALET;
 
 typedef struct stPUCK{
-	int posX, posY;      // Polozaj paka na mizi
+	double posX, posY;      // Polozaj paka na mizi
 	int lastposX, lastposY;
 	double dirX, dirY;   // Vektor smeri
 	double velocity;     // Hitrost premika paka

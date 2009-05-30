@@ -5,6 +5,9 @@
 #include "AHokey.h"
 #include "ChildView.h"
 #include "NeuralNetwork.h"
+#include <iostream>
+
+using namespace std;
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -320,17 +323,35 @@ void CChildView::EstimateNewPuckPossition(void)
 	 puck.posY += (int)puck.par*puck.dirY;
 		pl2Malet.lastposY=pl2Malet.posY;
 		//pl2Malet.posY=puck.posY;
-		if ((((puck.posX<435&&puck.lastposX<435))||((puck.posX>=435)&&(puck.lastposX>=435)))==false) {
-			data.clear();
-			data.push_back(((puck.lastposX*-1)+puck.posX)/780);
-			data.push_back(((puck.lastposY*-1)+puck.posY)/370);
-			result = network.calculate(data);
-		if (result.capacity() >0) {
-			pl2Malet.posX+=result[0]*20;
-			pl2Malet.posY+=result[1]*20;
-			result.clear();
-		}
-		}
+	data.clear();
+	data.push_back(puck.posX/825.0);
+	data.push_back(puck.posY/415.0);
+	data.push_back(puck.dirX/825.0);
+	data.push_back(puck.dirY/415.0);
+	data.push_back(pl1Malet.posX/825.0);
+	data.push_back(pl1Malet.posY/415.0);
+
+	//cout << "input: " << puck.posX/825.0 <<" "<<puck.posY/415.0<<" "<<puck.dirX/825.0<<" "<<puck.dirY/415.0<<" "<<pl1Malet.posX/825.0<<" "<<pl1Malet.posY/415.0 <<endl;
+	result = network->calculate(data);
+	cout << "x: " << result[0]*825 << ", y: " << result[1]*415 <<endl;
+	pl1Malet.posX+=result[0]*825;
+	pl1Malet.posY+=result[1]*415;
+	result.clear();
+
+	if(pl1Malet.posX < 45) {
+		 pl1Malet.posX=46;
+	 }
+	 if(pl1Malet.posX > 825/2.0) {
+		 pl1Malet.posX=825/2.0;
+	 }
+	 if(pl1Malet.posY < 45) {
+		 pl1Malet.posY=46;
+	 }
+	 if(puck.posY > 415) {
+		 pl1Malet.posY=414;
+	 }
+		
+		
 	 if(!validPuckPos()){
 	
 	 if(puck.posX < 45) {
@@ -393,13 +414,20 @@ void CChildView::OnShowWindow(BOOL bShow, UINT nStatus)
 {
 	CWnd::OnShowWindow(bShow, nStatus);
 
+	AllocConsole();
+	freopen ("CONOUT$", "w", stdout );
+
 	tableBorPen = new CPen(PS_SOLID, 2, RGB(0,0,0));
 	midLinePen = new CPen(PS_SOLID, 8, RGB(250,103,96));
 	tableBlLine = new CPen(PS_SOLID, 4, RGB(183,199,245));
 	redLinePen = new CPen(PS_SOLID, 2, RGB(254,174,183));
 	tableBrush.CreateSolidBrush(RGB(242,240,240));
 
-	network=NeuralNetwork(2, 2, 8, 2);
+	//network = new NeuralNetwork(6, 1, 10, 2);
+	network = new NeuralNetwork;
+	if(!network->load("utezi_500_1x10.txt")) {
+		MessageBox(_T("nn load error"),_T("error"), NULL);
+	}
 
 	// Nastavitev zacetnega polozaja prvega igralca
 	pl1Malet.posX = 331;

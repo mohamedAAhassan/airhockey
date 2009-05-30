@@ -2,14 +2,20 @@
 #define NEURON_NETWORK_H_
 
 #include <vector>
+#include <fstream>
 #include "NeuronLayer.h"
 using namespace std;
 
 class NeuralNetwork {
 public:
-	NeuralNetwork();
     NeuralNetwork(int, int, int, int);
+	NeuralNetwork();
     vector<double> calculate(vector<double>);
+	vector<NeuronLayer*> layers();
+	NeuronLayer* layerAt(int);
+
+	bool save(char*);
+	bool load(char*);
 
 private:
     int m_inputs;
