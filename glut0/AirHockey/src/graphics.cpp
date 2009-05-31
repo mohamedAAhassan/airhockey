@@ -24,7 +24,7 @@ void CGraphics::drawWall(double x1, double y1, double x2, double y2)
 { 
     glPushMatrix();
 	glBegin(GL_QUADS);
-            glColor4f(0.3,0.3,0.8, 0.5);
+           // glColor4f(0.3,0.3,0.8, 0.5);
             // lowver vertices
             glVertex3f(x1,y1,0);
             glVertex3f(x2,y2,0);
@@ -40,7 +40,7 @@ void CGraphics::drawWall(Point2 p1, Point2 p2)
 {
     glPushMatrix();
 	glBegin(GL_QUADS);
-            glColor4f(0.3,0.3,0.8, 0.5);
+        //    glColor4f(0.3,0.3,0.8, 0.5);
             // lowver vertices
             glVertex3f(p1.getX(), p1.getY(),0);
             glVertex3f(p2.getX(),p2.getY(),0);
@@ -56,7 +56,7 @@ void CGraphics::wallTo(double x1, double y1)
 {
     glPushMatrix();
         glBegin(GL_QUADS);
-            glColor4f(0.3,0.3,0.8, 0.5);
+       //     glColor4f(0.3,0.3,0.8, 0.5);
             // lowver vertices
             glVertex3f(this->currentPos.getX(),this->currentPos.getY(),0);
             glVertex3f(x1,y1,0);
@@ -73,7 +73,7 @@ void CGraphics::wallTo(Point2 p)
 {
     glPushMatrix();
         glBegin(GL_QUADS);
-            glColor4f(0.3,0.3,0.8, 0.5);
+          //  glColor4f(0.3,0.3,0.8, 0.5);
             // lowver vertices
             glVertex3f(this->currentPos.getX(),this->currentPos.getY(),0);
             glVertex3f(p.getX(), p.getY(), 0);
@@ -92,6 +92,8 @@ void CGraphics::drawPolys(CPolygonsList &list, double x, double y, double z)
     glPushMatrix();
         glTranslatef(x, y, z);
 
+        glColor4f(1.0, 0.40, 0.24, 0.6);
+
         // izrisi vse poligone (loop)
         for (int i=0; i<list.size(); i++)
         {
@@ -104,14 +106,16 @@ void CGraphics::drawPolys(CPolygonsList &list, double x, double y, double z)
                 // lik3: 0 0.3, 0.2 0.2, 0.2 -0.2, 0.1 -0.3, -0.2 -0.1;/
                 // lik4: 0 0, 0.2 0.3, 0.5 0.3, 0.6 0.1;/
                 // lik5: 0 0, 0.5 1.3, 1 0;/
+
+               //  lik2: 0 0, -0.5 0, -0.5 0.9, 0 0.5;
                 this->moveTo(list.getPolys()[i].getVertices()[j]);
                 this->wallTo(Point2(list.getPolys()[i].getVertices()[j+1]));
             //    this->drawWall(Point2(list.getPolys()[i].getVertices()[j]), Point2(list.getPolys()[i].getVertices()[j+1]));
 
                 if ( j == list.getPolys()[i].size()-2)
                 {
-                                    this->moveTo(list.getPolys()[i].getVertices()[j+1]);
-                                    this->wallTo(Point2(list.getPolys()[i].getVertices()[0]));
+                      this->moveTo(list.getPolys()[i].getVertices()[j+1]);
+                      this->wallTo(Point2(list.getPolys()[i].getVertices()[0]));
                    // this->drawWall(Point2(list.getPolys()[i].getVertices()[j+1]), Point2(list.getPolys()[i].getVertices()[0]));
                 }
 
