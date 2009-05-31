@@ -14,7 +14,7 @@ Pak::Pak(Point2 start, Point2 gibanje1, double radij, double frik, bool glavni, 
 }
 Pak::~Pak() {}
 
-void Pak::UpdatePos(double gol) {
+void Pak::UpdatePos() {
 	pozicija=pozicija+gibanje;
 	gibanje=gibanje*trenje;
 }

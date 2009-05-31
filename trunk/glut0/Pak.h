@@ -15,7 +15,7 @@ public:
 	Pak();
 	Pak(Point2 start, Point2 gibanje1, double radij, double frik, bool glavni, char* ime1);
 	~Pak();
-	void UpdatePos(double gol);
+	void UpdatePos();
 	Point2 getPos();
 	Point2 getDir();
 	void setLastPos(double a, double b);
