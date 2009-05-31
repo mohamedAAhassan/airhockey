@@ -3,19 +3,22 @@
 #include <iostream>
 #include "Point2.h"
 #include "Pak.h"
-#include "Kij.h"
+
 
 #define SIRINA 1.2
 #define DOLZINA 3
 #define VISINA 0.1
 
-Pak pakec=Pak(Point2(0.40,-2.1),Point2(0.01, -0.03), 0.1,0.999, SIRINA, DOLZINA);
-//Pak pakec2=Pak(Point2(0,-1),Point2(0, 0), 0.1,1, SIRINA, DOLZINA);
-Kij pakec2=Kij(Point2(0,-1),Point2(0, 0), 0.12,1, SIRINA, DOLZINA);
+Pak pakec=Pak(Point2(0.40,-2.1),Point2(0.01, -0.03), 0.1,0.999,true,"");
+Pak pakec2=Pak(Point2(0,-1),Point2(0, 0), 0.1,1, false,"Player 1");
+Pak pakec3=Pak(Point2(0,1.5),Point2(0, 0), 0.1,1, false,"Player 2");
+
+//Kij pakec2=Kij(Point2(0,-1),Point2(0, 0), 0.12,1, SIRINA, DOLZINA);
 
 GLfloat angle = 0.0;
 double gol=0.25;
-
+double not=pakec.getRad()*2;
+int resultpl1=0,resultpl2=0;
 
 GLfloat WIN_X = 0;
 GLfloat WIN_Y = 0;
@@ -28,6 +31,21 @@ struct table_s {
   GLfloat goal;
   GLfloat border;
 };
+
+void preveriTrk(Pak &prvi, Pak &drugi) {
+	Point2 razdalja=prvi.getPos()-drugi.getPos();
+	if (razdalja.Lenght()<=(prvi.getRad()+drugi.getRad())) {
+			double deltaY = (prvi.getPos().getY() - drugi.getPos().getY());
+            double deltaX = (prvi.getPos().getX() - drugi.getPos().getX());
+            double Distance = deltaX * deltaX + deltaY * deltaY;
+            double k1= (deltaX * prvi.getDir().getX() + deltaY * prvi.getDir().getY()) / Distance;
+            double k2 = (deltaX * prvi.getDir().getY() - deltaY * prvi.getDir().getX()) / Distance;
+            double k3 = (deltaX * drugi.getDir().getX() + deltaY * drugi.getDir().getY()) / Distance;
+            double k4 = (deltaX * drugi.getDir().getY() - deltaY * drugi.getDir().getX()) / Distance;
+            prvi.setDir(k3 * deltaX - k2 * deltaY,k3 * deltaY + k2 * deltaX);
+			prvi.UpdatePos(gol);
+	}
+}
 
 
 const float DEG2RAD = 3.14159/180;
@@ -58,14 +76,70 @@ void fillCircle(float radius)
    glEnd();
 }
 
+void napisi(double x, double y, double z, char *string)
+{
+  int len, i;
+  glRasterPos3f(x, y, z);
+  len = (int) strlen(string);
+  for (i = 0; i < len; i++)
+  {
+    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, string[i]);
+  }
+}
+void izrisi(Pak prvi) {
+	glPushMatrix();
+	glTranslatef(prvi.getPos().getX() ,prvi.getPos().getY(), 0.0);
+			GLUquadricObj* cyl;
+			cyl = gluNewQuadric();
+			gluQuadricDrawStyle(cyl, GLU_SMOOTH);
+			gluCylinder(cyl, prvi.getRad(), prvi.getRad(), 0.05, 16, 2);
+			glTranslatef(0,0,0.05);
+			fillCircle(prvi.getRad());
+			//napisi(prvi.getPos().getX()/3,prvi.getPos().getY()/3,0.1, prvi.getIme());
+			glBegin(GL_LINES);
+			glColor3f(1.0,0.1,0.7);
+			glVertex3f(0,0,0);
+			glVertex3f(prvi.getDir().getX()*20, prvi.getDir().getY()*20,0);
+			glEnd();
+			glPopMatrix();
+}
+
+void preveriTrkeInGol(Pak &prvi) {
+
+	if (abs((prvi.getPos()+prvi.getDir()).getX())>=SIRINA-prvi.getRad()) {
+		prvi.setDir(prvi.getDir().getX()*-1, prvi.getDir().getY());
+	}
+	if (abs((prvi.getPos()+prvi.getDir()).getY())>=DOLZINA-prvi.getRad()) {
+		if (abs(prvi.getPos().getX())<gol) {
+			if (prvi.getPos().getY()<0) {
+				resultpl2++;
+			}
+			else {
+				resultpl1++;
+			}
+			prvi.setPos(0,0);
+		}
+		else {
+			prvi.setDir(prvi.getDir().getX(), prvi.getDir().getY()*-1);
+		}
+	}
+}
+
+
+
+
 void Risi (void) {
 
+	
 	glRotatef(-100,1,0,0);
 	glRotatef(sin(angle/100)*5,0,0,1);
 	//glRotatef(angle/5,0,0,1);
 	//glRotatef(angle/5,0,1,0);
 	//glRotatef(-pakec.getPos().getX()*3,0,0,1);
 	glBegin(GL_QUADS);
+
+	//rezultat
+
 
 
 	glColor3f(1, 1, 1);
@@ -75,8 +149,53 @@ void Risi (void) {
 		glVertex3f(SIRINA,-DOLZINA,0);
 		glVertex3f(-SIRINA,-DOLZINA,0);
 
+		// Zagolje :D
+		glVertex3f(-gol,-DOLZINA,0);
+		glVertex3f(gol,-DOLZINA,0);
+		glVertex3f(gol,-DOLZINA-not,0);
+		glVertex3f(-gol,-DOLZINA-not,0);
+
+		glVertex3f(-gol,DOLZINA,0);
+		glVertex3f(gol,DOLZINA,0);
+		glVertex3f(gol,DOLZINA+not,0);
+		glVertex3f(-gol,DOLZINA+not,0);
+
+
+		glColor4f(0.3,0.3,0.8, 0.5);
+		//Stranice zagolja
+
+		glVertex3f(gol,-DOLZINA,0);
+		glVertex3f(gol,-DOLZINA-not,0);
+		glVertex3f(gol,-DOLZINA-not,VISINA/3);
+		glVertex3f(gol,-DOLZINA,VISINA);
+
+		glVertex3f(gol,-DOLZINA-not,0);
+		glVertex3f(gol,-DOLZINA-not,VISINA/3);
+		glVertex3f(-gol,-DOLZINA-not,VISINA/3);
+		glVertex3f(-gol,-DOLZINA-not,0);
+
+		glVertex3f(-gol,-DOLZINA,0);
+		glVertex3f(-gol,-DOLZINA-not,0);
+		glVertex3f(-gol,-DOLZINA-not,VISINA/3);
+		glVertex3f(-gol,-DOLZINA,VISINA);
+
+		glVertex3f(gol,DOLZINA,0);
+		glVertex3f(gol,DOLZINA+not,0);
+		glVertex3f(gol,DOLZINA+not,VISINA/3);
+		glVertex3f(gol,DOLZINA,VISINA);
+
+		glVertex3f(gol,DOLZINA+not,0);
+		glVertex3f(gol,DOLZINA+not,VISINA/3);
+		glVertex3f(-gol,DOLZINA+not,VISINA/3);
+		glVertex3f(-gol,DOLZINA+not,0);
+
+		glVertex3f(-gol,DOLZINA,0);
+		glVertex3f(-gol,DOLZINA+not,0);
+		glVertex3f(-gol,DOLZINA+not,VISINA);
+		glVertex3f(-gol,DOLZINA,VISINA/3);
+		
 		// Stranice
-	glColor4f(0.3,0.3,0.8, 0.5);
+	
 			//Zgornja
 		glVertex3f(-SIRINA,DOLZINA,0);
 		glVertex3f(-gol,DOLZINA,0);
@@ -160,6 +279,18 @@ void Risi (void) {
 	glVertex3f(gol+0.005, -2.5, 0.005);
 	glVertex3f(-gol-0.005, -2.5, 0.005);
 
+	glColor3f(0.5,0.5,0.5);
+	glVertex3f(-gol,-DOLZINA,0.005);
+	glVertex3f(gol,-DOLZINA,0.005);
+	glVertex3f(gol,-DOLZINA-0.003,0.005);
+	glVertex3f(-gol,-DOLZINA-0.003,0.005);
+
+	glVertex3f(-gol,DOLZINA,0.005);
+	glVertex3f(gol,DOLZINA,0.005);
+	glVertex3f(gol,DOLZINA+0.003,0.005);
+	glVertex3f(-gol,DOLZINA+0.003,0.005);
+
+	glColor3f(0.8,0.6,0.6);
 	glEnd( );
 	
 	glPushMatrix();
@@ -180,143 +311,47 @@ void Risi (void) {
 
 	// Pak
 	// Preveri trk
+	pakec3.setDir((pakec.getPos().getX()-pakec3.getPos().getX())/20+sin(angle/10)/50,sin(angle/10)/70);
+	//pakec3.setPos(pakec.getPos().getX(),2+sin(angle/100));
 	
-	Point2 razdalja=pakec.getPos()-pakec2.getPos();
-	if (razdalja.Lenght()<=(pakec.getRad()+pakec2.getRad())) {
-		// teh trk :D
-		//if (pakec2.getDir().Lenght()>0.1) {
-			double deltaY = (pakec.getPos().getY() - pakec2.getPos().getY());
-            double deltaX = (pakec.getPos().getX() - pakec2.getPos().getX());
-            double Distance = deltaX * deltaX + deltaY * deltaY;
-            double k1= (deltaX * pakec.getDir().getX() + deltaY * pakec.getDir().getY()) / Distance;
-            double k2 = (deltaX * pakec.getDir().getY() - deltaY * pakec.getDir().getX()) / Distance;
-            double k3 = (deltaX * pakec2.getDir().getX() + deltaY * pakec2.getDir().getY()) / Distance;
-            double k4 = (deltaX * pakec2.getDir().getY() - deltaY * pakec2.getDir().getX()) / Distance;
-            pakec.setDir(k3 * deltaX - k2 * deltaY,k3 * deltaY + k2 * deltaX);
-			if (razdalja.Lenght()<=(pakec.getRad()+pakec2.getRad())) { 
-				pakec.setPos(pakec.getPos()+razdalja*0.5);
-			}
-            //pakec2.setDir(k1 * deltaX - k4 * deltaY,k1 * deltaY + k4 * deltaX);
-		/*}
-		else {
+	preveriTrk(pakec, pakec2);
+	preveriTrk(pakec, pakec3);
 
 
-			double dist = (pakec.getPos()-pakec2.getPos()).Lenght();
-				double sumRadii = (pakec.getRad()+pakec2.getRad());
-				dist -= sumRadii;
-				if(pakec.getDir().Lenght() < dist){
-				  //return false;
-				}
-			Point2 C = pakec2.getPos()-pakec.getPos();
-			Point2 N=pakec.getDir();
-						// D = N . C = ||C|| * cos(angle between N and C)
-						double D = N.dot(C);
-
-						// Another early escape: Make sure that A is moving
-						// towards B! If the dot product between the movevec and
-						// B.center - A.center is less that or equal to 0,
-						// A isn't isn't moving towards B
-						if(D <= 0){
-						  // return false
-						}
-
-						// Find the length of the vector C
-						double lengthC = C.Lenght();
-
-						double F = (lengthC * lengthC) - (D * D);
-
-						// Escape test: if the closest that A will get to B
-						// is more than the sum of their radii, there's no
-						// way they are going collide
-						
-						double sumRadiiSquared = sumRadii * sumRadii;
-						if(F >= sumRadiiSquared){
-						  //return false;
-						}
-
-						// We now have F and sumRadii, two sides of a right triangle.
-						// Use these to find the third side, sqrt(T)
-						double T = sumRadiiSquared - F;
-						
-						// If there is no such right triangle with sides length of
-						// sumRadii and sqrt(f), T will probably be less than 0.
-						// Better to check now than perform a square root of a
-						// negative number.
-						if(T < 0){
-						  //return false;
-						}
-
-						// Therefore the distance the circle has to travel along
-						// movevec is D - sqrt(T)
-						double distance = D - sqrt(T);
-
-						// Get the magnitude of the movement vector
-						double mag = pakec.getDir().Lenght();
-			
-						// Finally, make sure that the distance A has to move
-						// to touch B is not greater than the magnitude of the
-						// movement vector.
-						if(mag < distance){
-						  //return false;
-						}
-						
-						// Set the length of the movevec so that the circles will just
-						// touch
-						//movevec.normalize();
-						//movevec.times(distance);
-						distance*=5;
-						std::cout<<distance<<"\n";
-						pakec.setDir(pakec.getDir().getX()*distance,pakec.getDir().getY()*distance);
-								}*/
-								
-
-			
-	}
-	
-
-
-	pakec.UpdatePos();
+	preveriTrkeInGol(pakec);
+	pakec.UpdatePos(gol);
+	pakec3.UpdatePos(gol);
 	//pakec2.UpdatePos();
+	pakec2.setDir(0,0);
+
 	glColor3f(0.1,0.1,0.1);
-	glPushMatrix();
-	glTranslatef(pakec.getPos().getX() ,pakec.getPos().getY(), 0.0);
-			GLUquadricObj* cyl;
-			cyl = gluNewQuadric();
-			gluQuadricDrawStyle(cyl, GLU_SMOOTH);
-			gluCylinder(cyl, pakec.getRad(), pakec.getRad(), 0.05, 16, 2);
-			glTranslatef(0,0,0.05);
-			fillCircle(pakec.getRad());
-			glBegin(GL_LINES);
-			glColor3f(1.0,0.1,0.7);
-			glVertex3f(0,0,0);
-			glVertex3f(pakec.getDir().getX()*20, pakec.getDir().getY()*20,0);
-			glEnd();
-			glPopMatrix();
-			glPushMatrix();
-			glColor3f(0.1,0.1,0.7);
-	glTranslatef(pakec2.getPos().getX() ,pakec2.getPos().getY(), 0.0);
-	printf("%d\n", pakec2.getPos().getX());
-			gluQuadricDrawStyle(cyl, GLU_SMOOTH);
-			gluCylinder(cyl, pakec2.getRad(), pakec2.getRad(), 0.05, 16, 2);
-			glTranslatef(0,0,0.05);
-			fillCircle(pakec2.getRad());
-			glBegin(GL_LINES);
-			glColor3f(1.0,0.1,0.7);
-			glVertex3f(0,0,0);
-			glVertex3f(pakec2.getDir().getX()*20, pakec2.getDir().getY()*20,0);
-			glEnd();
-			glPopMatrix();
+	izrisi(pakec);
 
+	glColor3f(0.1,0.1,0.7);
+	izrisi(pakec2);
 
-			
+	glColor3f(0.5,0.1,0.1);
+	izrisi(pakec3);
+
+	glColor3f(0.3, 0.3, 1);
+	glRasterPos3f(-SIRINA/3,DOLZINA,VISINA+0.2);
+	char buffer[2];
+	sprintf(buffer, "%i", resultpl1);
+	glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, buffer[0]);
+	glColor3f(0, 0, 0);
+	glRasterPos3f(0,DOLZINA,VISINA+0.2);
+    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, '-');
+	glColor3f(1, 0.3, 0.3);
+	glRasterPos3f(SIRINA/3,DOLZINA,VISINA+0.2);
+	sprintf(buffer, "%i", resultpl2);
+    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, buffer[0]);
 
 	angle++;
-	
+	//pakec2.setDir(pakec2.getDir().getX()*0.9,pakec2.getDir().getY()*0.9);
 }
 
 void MouseMotion(int x, int y)
 {
-	
   WIN_X = x;
   WIN_Y = y;
  
@@ -336,10 +371,10 @@ GLint viewport[4];
   gluUnProject(WIN_X, WIN_Y, WIN_Z, modelview, projection, viewport, &posX, &posY, &posZ);
   if ((abs(posX)<=SIRINA-pakec.getRad())&&((posY<=0)&&(posY>-DOLZINA))){
 	  pakec2.setDir((posX-pakec2.getPos().getX())/5,(posY-pakec2.getPos().getY())/5);
-	  pakec2.UpdatePos();
-	  pakec2.setPos(posX, posY);
+	  pakec2.UpdatePos(gol);
+	  //printf("%i\n", posX);
+
   }
-  
 }
 
 void init (void) {
@@ -387,7 +422,6 @@ glutPassiveMotionFunc(MouseMotion);
 init ();
 glutDisplayFunc (display);
 glutIdleFunc (display);
-
 glutReshapeFunc (reshape);
 glutMainLoop ();
 return 0;
