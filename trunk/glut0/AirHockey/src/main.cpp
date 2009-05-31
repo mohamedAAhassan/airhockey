@@ -1,6 +1,7 @@
 //
 #include <cmath>
 #include <iostream>
+#include <fstream>
 #include "graphics.h"
 #include "Point2.h"
 #include "Pak.h"
@@ -36,7 +37,8 @@ struct table_s {
   GLfloat border;
 };
 
-bool initGame();
+//bool initGame();
+void parse(char *file);
 
 //const float DEG2RAD = 3.14159/180; // in graphics
  
@@ -357,72 +359,87 @@ GLint viewport[4];
 }
 
 void init (void) {
-glEnable (GL_DEPTH_TEST);
-glEnable (GL_LIGHTING);
-glEnable (GL_LIGHT0);
-glEnable (GL_LIGHT1);
-glShadeModel (GL_SMOOTH);
-glEnable(GL_COLOR_MATERIAL);
-glEnable (GL_BLEND); glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    parse("test.poly");
+    
+    glEnable (GL_DEPTH_TEST);
+    glEnable (GL_LIGHTING);
+    glEnable (GL_LIGHT0);
+    glEnable (GL_LIGHT1);
+    glShadeModel (GL_SMOOTH);
+    glEnable(GL_COLOR_MATERIAL);
+    glEnable (GL_BLEND); glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 void display (void) {
-glClearDepth(1);
-glClearColor (0.9,0.9,1,1.0);
-glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-glLoadIdentity();
-GLfloat DiffuseLight[] = {1, 1,1}; //set DiffuseLight[] to the specified values
-GLfloat AmbientLight[] = {1, 1, 1}; //set AmbientLight[] to the specified values
-GLfloat LightPosition[] = {0, 0, 1, 0}; //set the LightPosition to the specified values
-glLightfv (GL_LIGHT0, GL_DIFFUSE, DiffuseLight); //change the light accordingly
-glLightfv (GL_LIGHT1, GL_AMBIENT, AmbientLight); //change the light accordingly
-glLightfv (GL_LIGHT0, GL_POSITION, LightPosition); //change the light accordingly
-gluLookAt (0.0, 2.5, 5.5,
-		   0.0, 0.0, 0.0,
-		   0.0, 1.0, 0.0);
-Risi();
-glutSwapBuffers();
+    glClearDepth(1);
+    glClearColor (0.9,0.9,1,1.0);
+    glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glLoadIdentity();
+    GLfloat DiffuseLight[] = {1, 1,1}; //set DiffuseLight[] to the specified values
+    GLfloat AmbientLight[] = {1, 1, 1}; //set AmbientLight[] to the specified values
+    GLfloat LightPosition[] = {0, 0, 1, 0}; //set the LightPosition to the specified values
+    glLightfv (GL_LIGHT0, GL_DIFFUSE, DiffuseLight); //change the light accordingly
+    glLightfv (GL_LIGHT1, GL_AMBIENT, AmbientLight); //change the light accordingly
+    glLightfv (GL_LIGHT0, GL_POSITION, LightPosition); //change the light accordingly
+    gluLookAt (0.0, 2.5, 5.5,
+                       0.0, 0.0, 0.0,
+                       0.0, 1.0, 0.0);
+    Risi();
+    glutSwapBuffers();
 }
 
 void reshape (int w, int h) {
-glViewport (0, 0, (GLsizei)w, (GLsizei)h);
-glMatrixMode (GL_PROJECTION);
-glLoadIdentity ();
-gluPerspective (30, (GLfloat)w / (GLfloat)h, 1.0, 100.0);
-glMatrixMode (GL_MODELVIEW);
+    glViewport (0, 0, (GLsizei)w, (GLsizei)h);
+    glMatrixMode (GL_PROJECTION);
+    glLoadIdentity ();
+    gluPerspective (30, (GLfloat)w / (GLfloat)h, 1.0, 100.0);
+    glMatrixMode (GL_MODELVIEW);
 }
 
 int main (int argc, char **argv) {
-    initGame();
-glutInit (&argc, argv);
-glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
-glutInitWindowSize (1024, 768);
-glutInitWindowPosition (100, 100);
-glutCreateWindow ("A basic OpenGL Window");
-glutPassiveMotionFunc(MouseMotion);
-init ();
-glutDisplayFunc (display);
-glutIdleFunc (display);
+    glutInit (&argc, argv);
+    glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
+    glutInitWindowSize (1024, 768);
+    glutInitWindowPosition (100, 100);
+    glutCreateWindow ("A basic OpenGL Window");
+    glutPassiveMotionFunc(MouseMotion);
+    init ();
+    glutDisplayFunc (display);
+    glutIdleFunc (display);
 
-glutReshapeFunc (reshape);
-glutMainLoop ();
-return 0;
+    glutReshapeFunc (reshape);
+    glutMainLoop ();
+    return 0;
 }
 
-bool initGame()
+void parse(char *file)
 {
+    fstream polyfile(file, fstream::in);
 
-    // init stuff
-    // polys
+    if (!polyfile.is_open())
+        cout<<"Error opening polygon file. "<<endl;
+
     Parser parser;
     string i_str;
     bool p;
-    cout<<"Insert script: "<<endl;
-    getline(cin, i_str, '/');
-    p = parser.parse(g_list, i_str);
+
+    int line = 1;
+    while (!polyfile.eof())
+    {
+        // read line and parse it :)
+        getline(polyfile, i_str);
+        p = parser.parse(g_list, i_str);
+
+        if (!p)
+       // {
+            cout<<"Error, polygon at line: "<< line << endl;
+          //  break;
+      //  }
+
+        line ++;
+    }
+
+
     cout<<endl<<"------------ DONE -------------"<<endl;
-    p ? cout<<"SUCCESS"<<endl : cout<<"FAIL";
     g_list.dump();
-    // ok
-    return true;
 }
 
