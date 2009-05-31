@@ -43,7 +43,7 @@ void preveriTrk(Pak &prvi, Pak &drugi) {
             double k3 = (deltaX * drugi.getDir().getX() + deltaY * drugi.getDir().getY()) / Distance;
             double k4 = (deltaX * drugi.getDir().getY() - deltaY * drugi.getDir().getX()) / Distance;
             prvi.setDir(k3 * deltaX - k2 * deltaY,k3 * deltaY + k2 * deltaX);
-			prvi.UpdatePos(gol);
+			prvi.UpdatePos();
 	}
 }
 
@@ -96,11 +96,11 @@ void izrisi(Pak prvi) {
 			glTranslatef(0,0,0.05);
 			fillCircle(prvi.getRad());
 			//napisi(prvi.getPos().getX()/3,prvi.getPos().getY()/3,0.1, prvi.getIme());
-			glBegin(GL_LINES);
-			glColor3f(1.0,0.1,0.7);
-			glVertex3f(0,0,0);
-			glVertex3f(prvi.getDir().getX()*20, prvi.getDir().getY()*20,0);
-			glEnd();
+			//glBegin(GL_LINES);
+			//glColor3f(1.0,0.1,0.7);
+			//glVertex3f(0,0,0);
+			//glVertex3f(prvi.getDir().getX()*20, prvi.getDir().getY()*20,0);
+			//glEnd();
 			glPopMatrix();
 }
 
@@ -319,8 +319,8 @@ void Risi (void) {
 
 
 	preveriTrkeInGol(pakec);
-	pakec.UpdatePos(gol);
-	pakec3.UpdatePos(gol);
+	pakec.UpdatePos();
+	pakec3.UpdatePos();
 	//pakec2.UpdatePos();
 	pakec2.setDir(0,0);
 
@@ -371,7 +371,7 @@ GLint viewport[4];
   gluUnProject(WIN_X, WIN_Y, WIN_Z, modelview, projection, viewport, &posX, &posY, &posZ);
   if ((abs(posX)<=SIRINA-pakec.getRad())&&((posY<=0)&&(posY>-DOLZINA))){
 	  pakec2.setDir((posX-pakec2.getPos().getX())/5,(posY-pakec2.getPos().getY())/5);
-	  pakec2.UpdatePos(gol);
+	  pakec2.UpdatePos();
 	  //printf("%i\n", posX);
 
   }
