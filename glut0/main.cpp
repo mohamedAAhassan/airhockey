@@ -160,8 +160,8 @@ void Risi (void) {
 
 	
 	glRotatef(-100,1,0,0);
-	//glRotatef(sin(angle/100)*5,0,0,1);
-	//glRotatef(sin(angle/10)*15,0,1,0);
+	glRotatef(sin(angle/100)*5,0,0,1);
+	//glRotatef(sin(angle/100)*15,0,1,0);
 	//glRotatef(sin(angle/10)*15,0,0,1);
 	//glRotatef(angle/5,0,1,0);
 	//glRotatef(angle/5,0,1,0);
@@ -347,30 +347,47 @@ void Risi (void) {
 	input.push_back((pakec.getPos().getY()+DOLZINA)/(DOLZINA*2));
 	input.push_back((pakec.getPos().getX()+SIRINA)/(SIRINA*2));
 	input.push_back((pakec.getDir().getY()));
-	//cout<<pakec.getDir().getX()<<endl;
+	//cout<<pakec.getDir().getX()<<endl;5
 	input.push_back((pakec.getDir().getX()));
 	input.push_back((pakec3.getPos().getY()+DOLZINA)/(DOLZINA*2));
 	input.push_back((pakec3.getPos().getX()+SIRINA)/(SIRINA*2));
 	//printf("Input: %f, %f, %f, %f, %f, %f\n", input[0],input[1],input[2]input[3],input[4],input[5]);
 	//cout<<"Input: "<<input[0]<<", "<<input[1]<<", "<<input[2]<<", "<<input[3]<<", "<<input[4]<<", "<<input[5]<<endl;
 	output=network->calculate(input);
-	printf("%f, %f", output[1],output[0]);
-	cout<<"<>"<<input[0]<<", "<<input[1]<<", "<<input[2]<<", "<<input[3]<<", "<<input[4]<<", "<<input[5]<<endl;
-	pakec3.setDir(output[0]*DOLZINA/40, output[1]*SIRINA/60);
+	//printf("%f, %f", output[1],output[0]);
+	//cout<<"<>"<<input[0]<<", "<<input[1]<<", "<<input[2]<<", "<<input[3]<<", "<<input[4]<<", "<<input[5]<<endl;
+	pakec3.setDir(output[1]*DOLZINA/3,output[0]*SIRINA/3);
 	Point2 temp=pakec3.getPos()+pakec3.getDir()*0.05;
 	//printf("%f - %f\n", temp.getX(), temp.getY());
 	if (abs(temp.getX())>=SIRINA-pakec3.getRad()) {
+		if (pakec3.getDir().getX()<0) {
+			pakec3.setPos(-SIRINA+pakec3.getRad()+0.001,pakec3.getPos().getY());
+		}
+		if (pakec3.getDir().getX()>0) {
+			pakec3.setPos(SIRINA-pakec3.getRad()-0.001,pakec3.getPos().getY());
+		}
 		pakec3.setDir(0,0);
 	}
 	if (abs(temp.getY())>=DOLZINA-pakec3.getRad()) {
+		pakec3.setPos(pakec3.getPos().getX(),DOLZINA-pakec3.getRad()-0.001);
 		pakec3.setDir(0,0);
 	}
 	if (temp.getY()<= pakec3.getRad()) {
+		pakec3.setPos(pakec3.getPos().getX(),pakec3.getRad()+0.001);
 		pakec3.setDir(0,0);
 	}
 	//pakec3.setDir((pakec.getPos().getX()-pakec3.getPos().getX())/20+sin(angle/11)/50,sin(angle/11)/10);
 	//pakec3.setDir(sin(angle/10)/10,0);
 	//pakec3.setPos(pakec.getPos().getX(),2+sin(angle/100));
+
+	//     |   |
+	//		\_/
+	//   ¡| ooo  |'
+	//    \ooooo/
+	//    ooo ooo
+	//    ooo ooo   BUG!
+	//    /oo oo\
+	//	 .|     |.
 	
 	preveriTrk(pakec, pakec2);
 	preveriTrk(pakec, pakec3);
