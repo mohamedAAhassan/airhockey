@@ -3,15 +3,20 @@
 #include <iostream>
 #include "Point2.h"
 #include "Pak.h"
+#include "NeuralNetwork.h"
 
 
 #define SIRINA 1.2
 #define DOLZINA 3
 #define VISINA 0.1
 
+NeuralNetwork* network=new NeuralNetwork();
+vector<double> input;
+vector<double> output;
+
 Pak pakec=Pak(Point2(0.40,-2.1),Point2(0.01, -0.03), 0.1,0.999,true,"");
 Pak pakec2=Pak(Point2(0,-1),Point2(0, 0), 0.1,1, false,"Player 1");
-Pak pakec3=Pak(Point2(0,1.5),Point2(0, 0), 0.1,1, false,"Player 2");
+Pak pakec3=Pak(Point2(0,1),Point2(0, 0), 0.1,1, false,"Player 2");
 
 //Kij pakec2=Kij(Point2(0,-1),Point2(0, 0), 0.12,1, SIRINA, DOLZINA);
 
@@ -19,6 +24,7 @@ GLfloat angle = 0.0;
 double gol=0.25;
 double not=pakec.getRad()*2;
 int resultpl1=0,resultpl2=0;
+char* statustxt="";
 
 GLfloat WIN_X = 0;
 GLfloat WIN_Y = 0;
@@ -33,8 +39,21 @@ struct table_s {
 };
 
 void preveriTrk(Pak &prvi, Pak &drugi) {
+	double  x21,y21,vx21,vy21;
+
+	x21 = prvi.getPos().getX() - drugi.getPos().getX();
+		y21 = prvi.getPos().getY()- drugi.getPos().getY();
+		vx21 = prvi.getDir().getX() - drugi.getDir().getX();
+		vy21 = prvi.getDir().getY() - drugi.getDir().getY();
+
+		if ((vx21 * x21 + vy21 * y21) >= 0)
+		{
+			return;
+		}
 	Point2 razdalja=prvi.getPos()-drugi.getPos();
 	if (razdalja.Lenght()<=(prvi.getRad()+drugi.getRad())) {
+		if (prvi.getLastTrk()>10) {
+			prvi.setLastTrk();
 			double deltaY = (prvi.getPos().getY() - drugi.getPos().getY());
             double deltaX = (prvi.getPos().getX() - drugi.getPos().getX());
             double Distance = deltaX * deltaX + deltaY * deltaY;
@@ -44,6 +63,14 @@ void preveriTrk(Pak &prvi, Pak &drugi) {
             double k4 = (deltaX * drugi.getDir().getY() - deltaY * drugi.getDir().getX()) / Distance;
             prvi.setDir(k3 * deltaX - k2 * deltaY,k3 * deltaY + k2 * deltaX);
 			prvi.UpdatePos();
+			prvi.setPos(prvi.getPos().getX()+prvi.getRad()*prvi.getDir().getX(),prvi.getPos().getY()+prvi.getRad()*prvi.getDir().getY());
+			Point2 razdalja=prvi.getPos()-drugi.getPos();
+			if (razdalja.Lenght()<=(prvi.getRad()+drugi.getRad())) {
+				
+				//prvi.setPos(prvi.getPos().getX()+razdalja.Lenght()*prvi.getDir().getX()*10,prvi.getPos().getY()+razdalja.Lenght()*prvi.getDir().getY()*10);
+				prvi.setPos(prvi.getPos().getX()+prvi.getRad()*prvi.getDir().getX(),prvi.getPos().getY()+prvi.getRad()*prvi.getDir().getY());
+			}
+		}
 	}
 }
 
@@ -87,20 +114,14 @@ void napisi(double x, double y, double z, char *string)
   }
 }
 void izrisi(Pak prvi) {
-	glPushMatrix();
-	glTranslatef(prvi.getPos().getX() ,prvi.getPos().getY(), 0.0);
+			glPushMatrix();
+			glTranslatef(prvi.getPos().getX() ,prvi.getPos().getY(), 0.0);
 			GLUquadricObj* cyl;
 			cyl = gluNewQuadric();
 			gluQuadricDrawStyle(cyl, GLU_SMOOTH);
 			gluCylinder(cyl, prvi.getRad(), prvi.getRad(), 0.05, 16, 2);
 			glTranslatef(0,0,0.05);
 			fillCircle(prvi.getRad());
-			//napisi(prvi.getPos().getX()/3,prvi.getPos().getY()/3,0.1, prvi.getIme());
-			//glBegin(GL_LINES);
-			//glColor3f(1.0,0.1,0.7);
-			//glVertex3f(0,0,0);
-			//glVertex3f(prvi.getDir().getX()*20, prvi.getDir().getY()*20,0);
-			//glEnd();
 			glPopMatrix();
 }
 
@@ -111,13 +132,20 @@ void preveriTrkeInGol(Pak &prvi) {
 	}
 	if (abs((prvi.getPos()+prvi.getDir()).getY())>=DOLZINA-prvi.getRad()) {
 		if (abs(prvi.getPos().getX())<gol) {
+			prvi.setDir(0,0);
 			if (prvi.getPos().getY()<0) {
 				resultpl2++;
+				prvi.setPos(0,-1);
 			}
 			else {
 				resultpl1++;
+				prvi.setPos(0,1);
 			}
-			prvi.setPos(0,0);
+			if ((resultpl1>6||resultpl2>6)) {
+				statustxt="Konec igre!";
+				prvi.setPos(-10000,-10000);
+				
+			}
 		}
 		else {
 			prvi.setDir(prvi.getDir().getX(), prvi.getDir().getY()*-1);
@@ -132,8 +160,10 @@ void Risi (void) {
 
 	
 	glRotatef(-100,1,0,0);
-	glRotatef(sin(angle/100)*5,0,0,1);
-	//glRotatef(angle/5,0,0,1);
+	//glRotatef(sin(angle/100)*5,0,0,1);
+	//glRotatef(sin(angle/10)*15,0,1,0);
+	//glRotatef(sin(angle/10)*15,0,0,1);
+	//glRotatef(angle/5,0,1,0);
 	//glRotatef(angle/5,0,1,0);
 	//glRotatef(-pakec.getPos().getX()*3,0,0,1);
 	glBegin(GL_QUADS);
@@ -191,8 +221,8 @@ void Risi (void) {
 
 		glVertex3f(-gol,DOLZINA,0);
 		glVertex3f(-gol,DOLZINA+not,0);
-		glVertex3f(-gol,DOLZINA+not,VISINA);
-		glVertex3f(-gol,DOLZINA,VISINA/3);
+		glVertex3f(-gol,DOLZINA+not,VISINA/3);
+		glVertex3f(-gol,DOLZINA,VISINA);
 		
 		// Stranice
 	
@@ -311,7 +341,35 @@ void Risi (void) {
 
 	// Pak
 	// Preveri trk
-	pakec3.setDir((pakec.getPos().getX()-pakec3.getPos().getX())/20+sin(angle/10)/50,sin(angle/10)/70);
+
+	// pak pos x, pak pos y, pak dir x, pak dir y, njegov pos x, njegov posy
+	input.clear();
+	input.push_back((pakec.getPos().getY()+DOLZINA)/(DOLZINA*2));
+	input.push_back((pakec.getPos().getX()+SIRINA)/(SIRINA*2));
+	input.push_back((pakec.getDir().getY()));
+	//cout<<pakec.getDir().getX()<<endl;
+	input.push_back((pakec.getDir().getX()));
+	input.push_back((pakec3.getPos().getY()+DOLZINA)/(DOLZINA*2));
+	input.push_back((pakec3.getPos().getX()+SIRINA)/(SIRINA*2));
+	//printf("Input: %f, %f, %f, %f, %f, %f\n", input[0],input[1],input[2]input[3],input[4],input[5]);
+	//cout<<"Input: "<<input[0]<<", "<<input[1]<<", "<<input[2]<<", "<<input[3]<<", "<<input[4]<<", "<<input[5]<<endl;
+	output=network->calculate(input);
+	printf("%f, %f", output[1],output[0]);
+	cout<<"<>"<<input[0]<<", "<<input[1]<<", "<<input[2]<<", "<<input[3]<<", "<<input[4]<<", "<<input[5]<<endl;
+	pakec3.setDir(output[0]*DOLZINA/40, output[1]*SIRINA/60);
+	Point2 temp=pakec3.getPos()+pakec3.getDir()*0.05;
+	//printf("%f - %f\n", temp.getX(), temp.getY());
+	if (abs(temp.getX())>=SIRINA-pakec3.getRad()) {
+		pakec3.setDir(0,0);
+	}
+	if (abs(temp.getY())>=DOLZINA-pakec3.getRad()) {
+		pakec3.setDir(0,0);
+	}
+	if (temp.getY()<= pakec3.getRad()) {
+		pakec3.setDir(0,0);
+	}
+	//pakec3.setDir((pakec.getPos().getX()-pakec3.getPos().getX())/20+sin(angle/11)/50,sin(angle/11)/10);
+	//pakec3.setDir(sin(angle/10)/10,0);
 	//pakec3.setPos(pakec.getPos().getX(),2+sin(angle/100));
 	
 	preveriTrk(pakec, pakec2);
@@ -345,6 +403,8 @@ void Risi (void) {
 	glRasterPos3f(SIRINA/3,DOLZINA,VISINA+0.2);
 	sprintf(buffer, "%i", resultpl2);
     glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, buffer[0]);
+	glColor3f(0.3, 0.3, 0.3);
+	napisi(0,0,1, statustxt);
 
 	angle++;
 	//pakec2.setDir(pakec2.getDir().getX()*0.9,pakec2.getDir().getY()*0.9);
@@ -385,6 +445,7 @@ glEnable (GL_LIGHT1);
 glShadeModel (GL_SMOOTH);
 glEnable(GL_COLOR_MATERIAL);
 glEnable (GL_BLEND); glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+network->load("utezi.txt");
 }
 void display (void) {
 glClearDepth(1);
