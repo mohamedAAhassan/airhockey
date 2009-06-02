@@ -2,6 +2,7 @@
 #define __SCANNER_H
 
 #include "token.h"
+#include "../stdafx.h"
 
 #define MAX_STATE 7
 #define START_STATE 0

@@ -1,5 +1,7 @@
 #include "token.h"
 
+#include "stdafx.h"
+
 // ctor
 Token::Token(const string &lexem, int column, int row, int lex_type, bool eof)
         : lexem(lexem), column(column), row(row), lex_type(lex_type), eof(eof) { }
@@ -61,6 +63,3 @@ string Token::getTokenInfo()
 
     return lexem + " - vrstica: " + toString(column) + " stolpec: " +  toString(row) + " tip: " + tip;
 }
-
-
-

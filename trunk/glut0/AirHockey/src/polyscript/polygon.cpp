@@ -1,5 +1,7 @@
 #include "polygon.h"
 
+#include "stdafx.h"
+
 /***************************
     CPolygon class
  ***************************/
