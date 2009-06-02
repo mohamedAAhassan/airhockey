@@ -11,6 +11,7 @@ protected:
 	double trenje;
 	bool jeglavni;
 	char *ime;
+	int trk;
 public:
 	Pak();
 	Pak(Point2 start, Point2 gibanje1, double radij, double frik, bool glavni, char* ime1);
@@ -28,5 +29,7 @@ public:
 	void setRad(double ra);
 	void setFri(double fri);
 	char* getIme();
+	int getLastTrk();
+	void setLastTrk();
 };
 #endif

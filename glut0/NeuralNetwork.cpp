@@ -34,7 +34,7 @@ NeuronLayer* NeuralNetwork::layerAt(int index) {
 
 bool NeuralNetwork::load(char *filename)
 {
-	char current[10];
+	char current[30];
 //	int st_utezi = 0;
 
 	fstream file(filename, fstream::in);

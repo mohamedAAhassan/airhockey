@@ -12,9 +12,9 @@ MKDIR=mkdir
 CP=cp
 CCADMIN=CCadmin
 RANLIB=ranlib
-CC=gcc
-CCC=g++
-CXX=g++
+CC=
+CCC=g++-4.exe
+CXX=g++-4.exe
 FC=
 
 # Macros
@@ -32,8 +32,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/main.o \
 	${OBJECTDIR}/src/Pak.o \
 	${OBJECTDIR}/src/polyscript/polygon.o \
-	${OBJECTDIR}/src/polyscript/token.o \
 	${OBJECTDIR}/src/polyscript/scanner.o \
+	${OBJECTDIR}/src/polyscript/token.o \
 	${OBJECTDIR}/src/polyscript/parser.o \
 	${OBJECTDIR}/src/Kij.o \
 	${OBJECTDIR}/src/graphics.o
@@ -79,15 +79,15 @@ ${OBJECTDIR}/src/polyscript/polygon.o: src/polyscript/polygon.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/polyscript/polygon.o src/polyscript/polygon.cpp
 
-${OBJECTDIR}/src/polyscript/token.o: src/polyscript/token.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/polyscript
-	${RM} $@.d
-	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/polyscript/token.o src/polyscript/token.cpp
-
 ${OBJECTDIR}/src/polyscript/scanner.o: src/polyscript/scanner.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/polyscript
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/polyscript/scanner.o src/polyscript/scanner.cpp
+
+${OBJECTDIR}/src/polyscript/token.o: src/polyscript/token.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/polyscript
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/polyscript/token.o src/polyscript/token.cpp
 
 ${OBJECTDIR}/src/polyscript/parser.o: src/polyscript/parser.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/polyscript

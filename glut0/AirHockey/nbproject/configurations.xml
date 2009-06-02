@@ -181,5 +181,76 @@
         <itemTool>3</itemTool>
       </item>
     </conf>
+    <conf name="NewConfiguration" type="1">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <compilerSet>Cygwin_1|Cygwin</compilerSet>
+        <platform>3</platform>
+      </toolsSet>
+      <compileType>
+        <ccCompilerTool>
+          <includeDirectories>
+            <directoryPath>C:/glut</directoryPath>
+            <directoryPath>C:/cygwin/bin</directoryPath>
+          </includeDirectories>
+        </ccCompilerTool>
+        <linkerTool>
+          <linkerLibItems>
+            <linkerLibLibItem>cygglut-3</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+      <item path="src/Kij.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Kij.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Pak.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Pak.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Point2.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Point2.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/graphics.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/graphics.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/main.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/polyscript/parser.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/polyscript/parser.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/polyscript/polygon.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/polyscript/polygon.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/polyscript/scanner.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/polyscript/scanner.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/polyscript/token.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/polyscript/token.h">
+        <itemTool>3</itemTool>
+      </item>
+    </conf>
   </confs>
 </configurationDescriptor>
