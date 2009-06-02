@@ -226,6 +226,30 @@
 			</FileConfiguration>
 		</File>
 		<File
+			RelativePath=".\NeuralNetwork.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\NeuralNetwork.h"
+			>
+		</File>
+		<File
+			RelativePath=".\Neuron.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\Neuron.h"
+			>
+		</File>
+		<File
+			RelativePath=".\NeuronLayer.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\NeuronLayer.h"
+			>
+		</File>
+		<File
 			RelativePath=".\Pak.cpp"
 			>
 		</File>

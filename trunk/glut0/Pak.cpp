@@ -11,12 +11,14 @@ Pak::Pak(Point2 start, Point2 gibanje1, double radij, double frik, bool glavni, 
 	trenje=frik;
 	jeglavni=glavni;
 	ime=ime1;
+	trk=11;
 }
 Pak::~Pak() {}
 
 void Pak::UpdatePos() {
 	pozicija=pozicija+gibanje;
 	gibanje=gibanje*trenje;
+	trk++;
 }
 Point2 Pak::getPos() {
 	return pozicija;
@@ -51,4 +53,10 @@ Point2 Pak::getLastPos(){
 
 char* Pak::getIme() {
 	return ime;
+}
+int Pak::getLastTrk() {
+	return trk;
+}
+void Pak::setLastTrk() {
+	trk=0;
 }
