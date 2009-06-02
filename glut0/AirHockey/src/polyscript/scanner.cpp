@@ -1,5 +1,7 @@
 #include "scanner.h"
 
+#include "stdafx.h"
+
 // ctor
 Scanner::Scanner(string input) : input(input), row(1), column(1)
 {
@@ -212,7 +214,4 @@ Token Scanner::nextTokenImp()
             }
     } while(true);
 }
-
-
-
 

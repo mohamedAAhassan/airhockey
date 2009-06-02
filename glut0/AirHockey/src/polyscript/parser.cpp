@@ -1,4 +1,6 @@
-#include "parser.h"
+//#include "parser.h"
+
+#include "stdafx.h"
 
 
 // ctor
@@ -18,10 +20,6 @@ void Parser::setScanner(Scanner *scanner)
     this->scanner->nextToken();
 }
 
-bool Parser::parse()//(double &val)
-{
-
-}
 
 bool Parser::parse(CPolygonsList &list, string str)
 {
@@ -176,6 +174,55 @@ bool Parser::rightTurn(Vertex &p1, Vertex &p2, Vertex &p3)
     Vertex cross = crossProduct( p2-p1,p3-p1);
     return cross.z <= 0 ? true : false;
       //  return true;
+}
+
+void Parser::compileString(CPolygonsList &list, string str)
+{
+
+
+
+   // Parser parser;
+   // string i_str;
+    //bool p = this->parse(list, str);
+
+    if (!this->parse(list, str))
+       cout<<"Error while compiling."<<endl;
+
+
+    cout<<endl<<"------------ DONE -------------"<<endl;
+    list.dump();
+}
+
+void Parser::compileFile(CPolygonsList &list, char *file)
+{
+    fstream polyfile(file, fstream::in);
+
+    if (!polyfile.is_open())
+        cout<<"Error opening polygon file. "<<endl;
+
+   // Parser parser;
+    string i_str;
+    bool p;
+
+    int line = 1;
+    while (!polyfile.eof())
+    {
+        // read line and parse it :)
+        getline(polyfile, i_str);
+        p = this->parse(list, i_str);
+
+        if (!p)
+       // {
+            cout<<"Error, polygon at line: "<< line << endl;
+          //  break;
+      //  }
+
+        line ++;
+    }
+
+
+    cout<<endl<<"------------ DONE -------------"<<endl;
+    list.dump();
 }
 
 
