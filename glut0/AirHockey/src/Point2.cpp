@@ -8,9 +8,6 @@ Point2::Point2(double a, double b){
 	y=b;
 }
 
-Point2::Point2(Vertex &v) : x(v.x), y(v.y) { }
-
-
 Point2::~Point2() {}
 
 double Point2::getX() {
@@ -28,12 +25,6 @@ void Point2::setX(double a){
 void Point2::setY(double a){
 	y=a;
 }
-
-void Point2::set(double x, double y) {
-    this->x = x;
-    this->y = y;
-}
-
 double Point2::Lenght() {
 	return sqrt(pow(x,2)+pow(y,2));
 }
