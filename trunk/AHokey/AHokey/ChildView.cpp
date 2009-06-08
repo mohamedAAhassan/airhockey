@@ -328,27 +328,27 @@ void CChildView::EstimateNewPuckPossition(void)
 	data.push_back(puck.posY/415.0);
 	data.push_back(puck.dirX/825.0);
 	data.push_back(puck.dirY/415.0);
-	data.push_back(pl1Malet.posX/825.0);
-	data.push_back(pl1Malet.posY/415.0);
+	data.push_back(pl2Malet.posX/825.0);
+	data.push_back(pl2Malet.posY/415.0);
 
 	//cout << "input: " << puck.posX/825.0 <<" "<<puck.posY/415.0<<" "<<puck.dirX/825.0<<" "<<puck.dirY/415.0<<" "<<pl1Malet.posX/825.0<<" "<<pl1Malet.posY/415.0 <<endl;
 	result = network->calculate(data);
-	cout << "x: " << result[0]*825 << ", y: " << result[1]*415 <<endl;
-	pl1Malet.posX+=result[0]*825;
-	pl1Malet.posY+=result[1]*415;
+	cout << "x: " << result[0] << ", y: " << result[1] <<endl;
+	pl2Malet.posX+=result[0]*825;
+	pl2Malet.posY+=result[1]*415;
 	result.clear();
 
-	if(pl1Malet.posX < 45) {
-		 pl1Malet.posX=46;
+	if(pl2Malet.posX > 825) {
+		 pl2Malet.posX=824;
 	 }
-	 if(pl1Malet.posX > 825/2.0) {
-		 pl1Malet.posX=825/2.0;
+	 if(pl2Malet.posX < 825/2.0) {
+		 pl2Malet.posX=825/2.0 + 1 + pl2Malet.radius + 20;
 	 }
-	 if(pl1Malet.posY < 45) {
-		 pl1Malet.posY=46;
+	 if(pl2Malet.posY < 45) {
+		 pl2Malet.posY=46;
 	 }
-	 if(puck.posY > 415) {
-		 pl1Malet.posY=414;
+	 if(pl2Malet.posY > 415) {
+		 pl2Malet.posY=414;
 	 }
 		
 		
@@ -425,7 +425,7 @@ void CChildView::OnShowWindow(BOOL bShow, UINT nStatus)
 
 	//network = new NeuralNetwork(6, 1, 10, 2);
 	network = new NeuralNetwork;
-	if(!network->load("utezi_500_1x10.txt")) {
+	if(!network->load("utezi_241_1x10.txt")) { 
 		MessageBox(_T("nn load error"),_T("error"), NULL);
 	}
 

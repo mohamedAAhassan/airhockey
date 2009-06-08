@@ -1,29 +1,20 @@
 #include "Pak.h"
+#include <stdio.h>
 #include <cmath>
-
-using namespace std;
 
 Pak::Pak() {}
 
-Pak::Pak(Point2 start, Point2 gibanje1, double radij, double frik, double s, double v){
+Pak::Pak(Point2 start, Point2 gibanje1, double radij, double frik, bool glavni, char* ime1){
 	pozicija=start;
 	gibanje=gibanje1;
 	r=radij;
 	trenje=frik;
-	sirina=s;
-	visina=v;
+	jeglavni=glavni;
+	ime=ime1;
 }
 Pak::~Pak() {}
 
 void Pak::UpdatePos() {
-
-	if (abs((pozicija+gibanje).getX())>=sirina-r) {
-		gibanje.setX(gibanje.getX()*-1);
-			}
-	if (abs((pozicija+gibanje).getY())>=visina-r) {
-		gibanje.setY(gibanje.getY()*-1);
-			}
-
 	pozicija=pozicija+gibanje;
 	gibanje=gibanje*trenje;
 }
@@ -56,4 +47,8 @@ void Pak::setLastPos(double a, double b) {
 Point2 Pak::getLastPos(){
 					   
 	return lastpos;
+}
+
+char* Pak::getIme() {
+	return ime;
 }

@@ -9,11 +9,11 @@ protected:
 	Point2 gibanje;
 	double r;
 	double trenje;
-	double sirina;
-	double visina;
+	bool jeglavni;
+	char *ime;
 public:
 	Pak();
-	Pak(Point2 start, Point2 gibanje1, double radij, double frik,double s, double v);
+	Pak(Point2 start, Point2 gibanje1, double radij, double frik, bool glavni, char* ime1);
 	~Pak();
 	void UpdatePos();
 	Point2 getPos();
@@ -27,5 +27,6 @@ public:
 	double getRad();
 	void setRad(double ra);
 	void setFri(double fri);
+	char* getIme();
 };
 #endif
