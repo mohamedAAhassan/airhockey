@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
-	Name="pospeskometer"
+	Version="9.00"
+	Name="AirHockey"
 	ProjectGUID="{FA4FC353-ECE7-4055-A6FB-F0C6C87538B0}"
 	RootNamespace="pospeskometer"
 	Keyword="MFCProj"
