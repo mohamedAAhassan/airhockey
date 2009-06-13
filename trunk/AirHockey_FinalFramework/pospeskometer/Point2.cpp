@@ -12,6 +12,11 @@ Point2::Point2(double a, double b){
 
 Point2::Point2(Vertex &v) : x(v.x), y(v.y) { }
 
+void Point2::transform(double x, double y)
+{
+	this->x *= x;
+	this->y *= y;
+}
 
 Point2::~Point2() {}
 

@@ -46,6 +46,8 @@ public:
     unsigned size() const;
     vector<Vertex> getVertices() const;
 
+	Vertex getTransformedVertex(unsigned i, double a, double b);
+
 };
 
 class CPolygonsList

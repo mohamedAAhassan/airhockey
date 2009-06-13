@@ -126,23 +126,24 @@ bool Parser::F(CPolygonsList &list, CPolygon *currentPoly)//(double &val)
                 {
                         Vertex v(x, y);
 
-                            if ( this->rightTurn(currentPoly->getVertices().at(currentPoly->size()-1), v, currentPoly->getVertices().at(currentPoly->size()-2) ))
-                            {
+                           // if ( this->rightTurn(currentPoly->getVertices().at(currentPoly->size()-1), v, currentPoly->getVertices().at(currentPoly->size()-2) ))
+                          //  {
                                 // ni ok
-                                g_Error += "Semantic error, polygon should not be convex!\r\n";
-                                return false;
-                            }
+                           //     g_Error += "Semantic error, polygon should not be convex!\r\n";
+                             //   return false;
+								// zacasno!!!
+                        //    }
 
 
-                        else
-                        {
+                     //   else
+                      //  {
                             // ok
                             currentPoly->addVertex(x, y);
 
                             scanner->nextToken();
                             return L(list, currentPoly);
-                        }
-                    }
+                      //  }
+					}
                     else
                     {
                         currentPoly->addVertex(x, y);
