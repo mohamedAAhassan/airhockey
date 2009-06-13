@@ -40,6 +40,12 @@ vector<Vertex> CPolygon::getVertices() const
     return this->vertices;
 }
 
+Vertex CPolygon::getTransformedVertex(unsigned i, double a, double b)
+{
+	return Vertex((this->vertices[i].x -0.5) * a, (this->vertices[i].y - 0.5) * b);
+	//return Vertex();
+}
+
 
 /***************************
     CPolygonList class

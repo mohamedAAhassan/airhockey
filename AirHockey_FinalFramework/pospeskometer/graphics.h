@@ -3,6 +3,10 @@
 
 #define DEG2RAD 0.017453278
 
+#define SIRINA 1.2
+#define DOLZINA 3
+#define VISINA 0.1
+
 #include <GL/glut.h>
 #include <cmath>
 #include "Point2.h"

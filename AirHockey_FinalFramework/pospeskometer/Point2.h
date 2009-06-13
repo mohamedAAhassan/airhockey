@@ -18,6 +18,8 @@ public:
 	void setY(double a);
         void set(double x, double y);
 
+	void transform(double x, double y);
+
 	double Lenght();
 	Point2 operator* (double a);
 	Point2 operator+ (Point2 a);

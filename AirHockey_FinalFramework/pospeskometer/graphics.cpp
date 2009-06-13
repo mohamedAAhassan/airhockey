@@ -109,15 +109,23 @@ void CGraphics::drawPolys(CPolygonsList &list, double x, double y, double z)
                 // lik4: 0 0, 0.2 0.3, 0.5 0.3, 0.6 0.1;/
                 // lik5: 0 0, 0.5 1.3, 1 0;/
 
+				//akec3.setDir(output[1]*DOLZINA/3,output[0]*SIRINA/3);
+
                //  lik2: 0 0, -0.5 0, -0.5 0.9, 0 0.5;
-                this->moveTo(list.getPolys()[i].getVertices()[j]);
-                this->wallTo(Point2(list.getPolys()[i].getVertices()[j+1]));
+				this->moveTo(list.getPolys()[i].getTransformedVertex(j, SIRINA*2, DOLZINA*2));//  getVertices()[j]);
+                this->wallTo(Point2(list.getPolys()[i].getTransformedVertex(j+1, SIRINA*2, DOLZINA*2))); //  getVertices()[j+1]));
             //    this->drawWall(Point2(list.getPolys()[i].getVertices()[j]), Point2(list.getPolys()[i].getVertices()[j+1]));
+
+				//this->moveTo(list.getPolys()[i].getTransformedVertex(j, 1, 1));//  getVertices()[j]);
+                //this->wallTo(Point2(list.getPolys()[i].getTransformedVertex(j+1, 1, 1))); //  getVertices()[j+1]));
 
                 if ( j == list.getPolys()[i].size()-2)
                 {
-                      this->moveTo(list.getPolys()[i].getVertices()[j+1]);
-                      this->wallTo(Point2(list.getPolys()[i].getVertices()[0]));
+                      this->moveTo(list.getPolys()[i].getTransformedVertex(j+1, SIRINA*2, DOLZINA*2));  //getVertices()[j+1]);
+                      this->wallTo(Point2(list.getPolys()[i].getTransformedVertex(0, SIRINA*2, DOLZINA*2))); //  getVertices()[0]));
+
+                    //  this->moveTo(list.getPolys()[i].getTransformedVertex(j+1, 1, 1));  //getVertices()[j+1]);
+                    //  this->wallTo(Point2(list.getPolys()[i].getTransformedVertex(0, 1, 1))); //  getVertices()[0]));
                    // this->drawWall(Point2(list.getPolys()[i].getVertices()[j+1]), Point2(list.getPolys()[i].getVertices()[0]));
                 }
 
