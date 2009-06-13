@@ -1,0 +1,107 @@
+# depslib dependency file v1.0
+1235400892 source:h:\vaje org\vaja1cb\vertex.cpp
+	"Vertex.h"
+
+1235404851 
+
+1235404936 h:\vaje org\vaja1cb\vertex.h
+	"Point3.h"
+
+1235404105 h:\vaje org\vaja1cb\point3.h
+	<iostream>
+	<cmath>
+
+1235404118 source:h:\vaje org\vaja1cb\main.cpp
+	<iostream>
+	"Point3.h"
+	"Vertex.h"
+
+1235404851 source:h:\vaje org\vaja1cb\point3.cpp
+	"Point3.h"
+
+1237019873 source:/home/aljosa/Faks/osnove rac. geometrije/vaje ORG/vaja1CB/Point3.cpp
+	"Point3.h"
+
+1236765167 /home/aljosa/Faks/osnove rac. geometrije/vaje ORG/vaja1CB/Point3.h
+	<iostream>
+	<cmath>
+
+1236978568 source:/home/aljosa/Faks/osnove rac. geometrije/vaje ORG/vaja1CB/Vertex.cpp
+	"Vertex.h"
+
+1236977417 /home/aljosa/Faks/osnove rac. geometrije/vaje ORG/vaja1CB/Vertex.h
+	"Point3.h"
+
+1237022782 source:/home/aljosa/Faks/osnove rac. geometrije/vaje ORG/vaja1CB/main.cpp
+	<iostream>
+	<vector>
+	<algorithm>
+	"graphic.h"
+	"Vertex.h"
+	"grahamscan.h"
+	<ctime>
+
+1236978025 source:/home/aljosa/Faks/osnove rac. geometrije/vaje ORG/vaja1CB/graphic.cpp
+	"graphic.h"
+
+1236978624 /home/aljosa/Faks/osnove rac. geometrije/vaje ORG/vaja1CB/graphic.h
+	<GL/glut.h>
+	"Point3.h"
+
+1237022129 /home/aljosa/Faks/osnove rac. geometrije/vaje ORG/vaja1CB/grahamscan.h
+	<ctime>
+	"Vertex.h"
+	"Point3.h"
+	"seznam.h"
+	"stack.h"
+
+1237021678 /home/aljosa/Faks/osnove rac. geometrije/vaje ORG/vaja1CB/seznam.h
+	"Vertex.h"
+	<iostream>
+
+1237022987 /home/aljosa/Faks/osnove rac. geometrije/vaje ORG/vaja1CB/stack.h
+	"Vertex.h"
+
+1237019873 source:/home/aljosa/Desktop/Link to Faks/osnove rac. geometrije/vaje ORG/vaja 1 - convex hull/convexHullv3/Point3.cpp
+	"Point3.h"
+
+1236765167 /home/aljosa/Desktop/Link to Faks/osnove rac. geometrije/vaje ORG/vaja 1 - convex hull/convexHullv3/Point3.h
+	<iostream>
+	<cmath>
+
+1236978568 source:/home/aljosa/Desktop/Link to Faks/osnove rac. geometrije/vaje ORG/vaja 1 - convex hull/convexHullv3/Vertex.cpp
+	"Vertex.h"
+
+1236977417 /home/aljosa/Desktop/Link to Faks/osnove rac. geometrije/vaje ORG/vaja 1 - convex hull/convexHullv3/Vertex.h
+	"Point3.h"
+
+1236978025 source:/home/aljosa/Desktop/Link to Faks/osnove rac. geometrije/vaje ORG/vaja 1 - convex hull/convexHullv3/graphic.cpp
+	"graphic.h"
+
+1236978624 /home/aljosa/Desktop/Link to Faks/osnove rac. geometrije/vaje ORG/vaja 1 - convex hull/convexHullv3/graphic.h
+	<GL/glut.h>
+	"Point3.h"
+
+1237019872 source:/media/data/data/Faks/UI/Project/polygon_generator/polygen/Point3.cpp
+	"Point3.h"
+
+1236765166 /media/data/data/Faks/UI/Project/polygon_generator/polygen/Point3.h
+	<iostream>
+	<cmath>
+
+1236978024 source:/media/data/data/Faks/UI/Project/polygon_generator/polygen/graphic.cpp
+	"graphic.h"
+
+1236978624 /media/data/data/Faks/UI/Project/polygon_generator/polygen/graphic.h
+	<GL/glut.h>
+	"Point3.h"
+
+1244916069 source:/media/data/data/Faks/UI/Project/polygon_generator/polygen/main.cpp
+	<iostream>
+	<fstream>
+	<vector>
+	<cstdlib>
+	<cstdio>
+	"graphic.h"
+	<ctime>
+
