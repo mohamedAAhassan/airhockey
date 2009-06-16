@@ -95,7 +95,7 @@ void CChildView::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 	pl2Score = 0;
 	old_mal1_x = -2;
 	old_mal1_y = -2;
-	//startTick = GetTickCount();
+	startTick = GetTickCount();
 	SetCursorPos(pl1Malet.posX,pl1Malet.posY+50); // miško postavimo v sredino igralne mize
 	//ShowCursor(FALSE);     // skrijemo kurzor miške
 }
@@ -399,7 +399,7 @@ void CChildView::EstimateNewPuckPossition(void)
 // formulo za hitrost in izraèunati morebitno kolizijo z robom mize. 
 ///////////////////////////////////////////////////////////////////////////////
 {
-	puck.par = puck.velocity;
+	//puck.par = puck.velocity;
 	 puck.posX += (int)puck.par*puck.dirX;
 	 puck.posY += (int)puck.par*puck.dirY;
 	 
@@ -548,21 +548,24 @@ void CChildView::OnTimer(UINT_PTR nIDEvent)
 	///////////////////////////////////////////////////////////////////////////
 	//CWnd::OnTimer(nIDEvent);
 	EstimateNewPuckPossition();  // doloèitev položaja paka
-
+	int tick = GetTickCount();
+	
     DetermineGoal();
 //************************************belezenje podatkov*****************************************************************************//
-	if(nekaj%6>1)//hitrost belezenja podatkov
+	//if(nekaj%6>1)//hitrost belezenja podatkov
+if((tick-startTick) >= 100)
 	  {
 		ofstream out("test.txt",ios_base::app); 
-		double deltaX = puck.posX - oldX;
-		double deltaY = puck.posY - oldY;
+		double deltaX = pl1Malet.posX - oldX;
+		double deltaY = pl1Malet.posY - oldY;
 		if(oldX != 0 && oldY != 0) {
 			out << deltaX/825.0 << " " << deltaY/415.0 <<endl;
 		}
 		out << puck.posX/825.0 <<" "<<puck.posY/415.0<<" "<<puck.dirX/825.0<<" "<<puck.dirY/415.0<<" "<<pl1Malet.posX/825.0<<" "<<pl1Malet.posY/415.0 << " ";
-		oldX = puck.posX;
-		oldY = puck.posY;
+		oldX = pl1Malet.posX;
+		oldY = pl1Malet.posY;
 		out.close();
+		startTick=tick;
 	  }
 
 	if(nekaj>300)//èas potrebn za resetiranje paka
