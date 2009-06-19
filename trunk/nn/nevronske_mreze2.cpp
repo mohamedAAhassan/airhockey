@@ -83,17 +83,17 @@ void testPrimer1() {
 }
 
 int main(int argc, char** argv) {
-	NeuralNetwork network(6, 1, 100, 2);
+	NeuralNetwork network(6, 1, 10, 2);
 	
 	vector< vector<double> > x;
 	vector< vector<double> > d;
 
-	CNNParser parser("vzorci.txt");
+	CNNParser parser("vzorci2.txt");
 	parser.parse();
 
 	int num = 0;
 	for(int i=0; i<parser.getPatterns().getM(); i++) {
-		if(i%5 == 0) {
+		if(i%10 == 0) {
 			num++;
 			vector<double> temp;
 			int size = parser.getPatterns().returnVector(i).size()-1;
@@ -114,11 +114,11 @@ int main(int argc, char** argv) {
 			x.push_back(temp2);
 		}
 	}
-	
+
 	cout << "Stevilo vzorcev: " << num << endl;
 
 	LearnNeuralNetwork networkLearn(&network);
-	networkLearn.learn(x, d, 0.5, new Error(0.000059, x.size()));
+	networkLearn.learn(x, d, 0.5, new Error(0.004529, x.size()));
 	//networkLearn.learn(x, d, 0.5, new DeltaError(0.001, x.size()));
 	//networkLearn.learn(x, d, 0.5, new Error(0.1, x.size()));
 

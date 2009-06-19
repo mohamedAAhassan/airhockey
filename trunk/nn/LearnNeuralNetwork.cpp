@@ -40,7 +40,7 @@ void LearnNeuralNetwork::learn(vector< vector<double> > x, vector< vector<double
 	m_learningSpeed = learningSpeed;
 
 	print_input_values(x, p);
-	print_weights(m_neuralNetwork);
+	//print_weights(m_neuralNetwork);
 	cin.get();
 	do {
 		for(int j=0; j<x.size(); j++) {
